@@ -1,0 +1,450 @@
+# Example input / output file your program should be able to process
+#
+# Explanation: 
+#
+# empty line:        separates two computations   
+#
+# line starts with
+# #:                 comment, to be ignored by the program
+# [mod]:             the modulus used in the next computation;
+#                    all computations will be done modulo [mod]
+#
+# input:             polynomials/field elements should be input as a list;
+
+#                    entries are 32-bit signed integers (to be reduced mod [mod]);
+
+#                    the last entry of the list is the constant coefficient;
+#                    second to last is the coefficient of X, etc;
+#                    e.g. {0,1,2,3} represents 0X^3+1X^2+2X+3;
+#                    this should then be simplified to X^2+2X+3, see output
+#
+# output:            polynomials should be output in the standardized form
+
+#                    a_nX^n+a_{n-1}X^{n-1}+...+a_1X+a_0;
+
+#                    all a_i should be integers between 0 and [mod] - 1;
+
+#                    if the polynomial is 0, output should be 0. Else:
+
+#                    no term 0X^i should be listed, nor should 0;
+
+#                    terms 1X^i (i > 0) should be simplified to X^i.
+#                    Field elements should be given in reduced form;
+
+#                    a mod q should be the remainder of a upon division by q;
+
+#                    here q is the polynomial that defines the field
+#
+
+#                    for addition and multiplication tables, output is as follows;
+
+#                    format of answer is a matrix; { starts and } ends the matrix;
+
+#                    a , indicates a new element in the row, a ; indicates a new row;
+
+#                    the (i,j)-th entry is the sum respectively product of
+
+#                    the i-th and j-th element of F;
+
+#                    elements of F are ordered lexicographically;
+
+#                    list polynomials of lower degree first;
+
+#                    if polynomials have the same degree, look at the highest term
+
+#                    at which they differ, then list the one with lower coefficient first;
+
+#                    e.g. 3 is listed before X and X is listed before X^2;
+
+#                    X^2+2X+5 is listed before X^2+6X+2 because 2 < 3 (if [mod]>6);
+
+#                    so first list constants, then X+constants, then
+
+#                    2X+constants etc., then X^2, X^2+constants, etc.
+#
+# Polynomial arithmetic:
+# [display-poly]:    give the standard representative of the following polynomial
+# [add-poly]:        apply addition to the following two polynomials
+# [subtract-poly]:   apply subtraction to the following two polynomials
+# [multiply-poly]:   apply multiplication to the following two polynomials
+# [f]:               first polynomial to which the operation is to be applied
+#                    to be ignored when no polynomial input is required
+# [g]:               second polynomial to which the operation is to be applied
+#                    to be ignored when at most one polynomial input is required
+# [h]:               third polynomial to which the operation is to be applied
+#                    to be ignored when at most two polynomial inputs are required
+# [answer]:          to be ignored if the file is input; 
+#                    the correct answer of the preceding computation if the file is output
+# [long-div-poly]:   apply long division of the first polynomial by the second
+# [answ-q]:          to be ignored if the file is input;
+#                    q such that f = qg+r with deg(r) < deg(g) if the file is output
+# [answ-r]:          to be ignored if the file is input;
+#                    r such that f = qg+r with deg(r) < deg(g) if the file is output
+# [euclid-poly]:     Euclid's Extended Algorithm
+# [answ-a]:          to be ignored if the file is input; 
+#                    a such that gcd(f,g) = a f + b g if the file is output
+# [answ-b]:          to be ignored if the file is input; 
+#                    b such that gcd(f,g) = a f + b g if the file is output
+# [answ-d]:          to be ignored if the file is input; 
+#                    gcd(f,g) if the file is output
+#                    should always be monic (or output ERROR if f and g are both 0)
+# [equals-poly-mod]: test whether the following two polynomials are equal 
+#                    modulo the third one
+# [irreducible]:     test whether the following polynomial is irreducible
+# [deg]:             specifies the degree of an irreducible polynomial to be found
+# [find-irred]:      give an irreducible polynomial of degree [deg]
+#                    NOTE: depending on the randomization algorithm you use, 
+#                    the output of [find-irred] may differ from the output 
+#                    in this sample file
+#
+# Finite field arithmetic:
+# [mod-poly]:        an irreducible polynomial q; 
+#                    used to construct the field F = Z/[mod]Z [X] / (q(X))
+# [add-table]:       produces the addition table of F;
+
+# [mult-table]:      produces the multiplication table of F;
+
+# [display-field]:   give a representative of the following field element of F in standard form;
+#                    this means display the unique polynomial of degree less than 
+#                    the degree of q that represents the field element
+# [add-field]:       apply addition to the following elements in F
+# [subtract-field]:  apply addition to the following elements in F
+# [multiply-field]:  apply multiplication to the following elements of F
+# [inverse-field]:   find a multiplicative inverse of the following element of F
+# [division-field]:  apply division of the first field element by the second one
+# [a]:               first field element to which the operation is to be applied
+#                    to be ignored when no input is required
+# [b]:               second field element to which the operation is to be applied
+#                    to be ignored when at most one field element is required
+# [answer]:          to be ignored if the file is input; 
+#                    the correct answer of the preceding computation if the file is output
+# [equals-field]:    test whether the following two elements of F are equal
+# [primitive]:       test whether the following field element is primitive
+# [find-prim]:       give a primitive element of F
+
+#                    NOTE: depending on the randomization algorithm you use, 
+
+#                    the output of [find-prim] may differ from the output
+#                    in this sample file
+
+
+# Polynomial arithmetic
+
+[mod]		7
+[display-poly]
+[f]		{1,2,6}
+[answer]	X^2+2X+6
+
+[mod]		5
+[display-poly]
+[f]		{1,2,6}
+[answer]	X^2+2X+1
+
+[mod]		7
+[display-poly]
+[f]		{1,2,0}
+[answer]	X^2+2X
+
+[mod]		7
+[display-poly]
+[f]		{1,2,7}
+[answer]	X^2+2X
+
+[mod]		7
+[display-poly]
+[f]		{0,1,2,0}
+[answer]	X^2+2X
+
+[mod]		7
+[display-poly]
+[f]		{-1,0,1,3}
+[answer]	6X^3+X+3
+
+[mod]		7
+[display-poly]
+[f]		{0,1,10,-1,0,2,3}
+[answer]	X^5+3X^4+6X^3+2X+3
+
+[mod]		7
+[display-poly]
+[f]		{}
+[answer]	0
+
+[mod]		7
+[display-poly]
+[f]		{0,0}
+[answer]	0
+
+[mod]		7
+[add-poly]
+[f]		{5,2,3}
+[g]		{2,3,4,0}
+[answer]	2X^3+X^2+6X+3
+
+[mod]		7
+[subtract-poly]
+[f]		{1,2,3}
+[g]		{2,3,4,0}
+[answer]	5X^3+5X^2+5X+3
+
+[mod]		7
+[multiply-poly]
+[f]		{6}
+[g]		{5}
+[answer]	2
+
+[mod]		7
+[multiply-poly]
+[f]		{27}
+[g]		{33}
+[answer]	2
+
+[mod]		7
+[multiply-poly]
+[f]		{1,1,1}
+[g]		{1,-1}
+[answer]	X^3+6
+
+[mod]		7
+[long-div-poly]
+[f]		{6}
+[g]		{5}
+[answ-q]	4
+[answ-r]	0
+
+[mod]		7
+[long-div-poly]
+[f]		{1,1,1}
+[g]		{2,-2}
+[answ-q]	4X+1
+[answ-r]	3
+
+[mod]		7
+[long-div-poly]
+[f]		{1,1,1}
+[g]		{0}
+[answ-q]	ERROR
+[answ-r]	ERROR
+
+[mod]		7
+[euclid-poly]
+[f]		{1,1,1}
+[g]		{2,-2}
+[answ-a]:	5
+[answ-b]:	X+2
+[answ-d]:	1
+
+[mod]		7
+[euclid-poly]
+[f]		{1,0,1}
+[g]		{1,0,0,1}
+[answ-a]:	3X^2+3X+4
+[answ-b]:	4X+4
+[answ-d]:	1
+
+[mod]		2
+[euclid-poly]
+[f]		{1,0,1}
+[g]		{1,0,0,1}
+[answ-a]:	X
+[answ-b]:	1
+[answ-d]:	X+1
+
+[mod]		7
+[euclid-poly]
+[f]		{1,1,1}
+[g]		{0}
+[answ-a]:	1
+[answ-b]:	0
+[answ-d]:	X^2+X+1
+
+[mod]		7
+[euclid-poly]
+[f]		{2,2,2}
+[g]		{0}
+[answ-a]:	4
+[answ-b]:	0
+[answ-d]:	X^2+X+1
+
+[mod]		7
+[equals-poly-mod]
+[f]		{1,1,1}
+[g]		{10}
+[h]		{1,-1}
+[answer]  	TRUE
+
+[mod]		5
+[equals-poly-mod]
+[f]		{1,1,1}
+[g]		{10}
+[h]		{1,-1}
+[answer] 	FALSE
+
+[mod]		7
+[equals-poly-mod]
+[f]		{1,1,1}
+[g]		{3}
+[h]		{}
+[answer] 	FALSE
+
+[mod]		2
+[irreducible]
+[f]		{1,1,1}
+[answer]	TRUE
+
+[mod]		3
+[irreducible]
+[f]		{1,1,1}
+[answer]	FALSE
+
+[mod]		2
+[find-irred]
+[deg]		3
+[answer]	X^3+X+1
+
+[mod]		2
+[find-irred]
+[deg]		3
+[answer]	X^3+X^2+1
+
+[mod]		2
+[find-irred]
+[deg]		4
+[answer]	X^4+X+1
+
+# Finite field arithmetic:
+
+[mod]		2
+[mod-poly]	{1,1,1}
+[add-table]
+[answer]	{0, 1, X, X+1; 1, 0, X+1, X; X, X+1, 0, 1; X+1, X, 1, 0}
+
+[mod]		2
+[mod-poly]	{1,1,1}
+[mult-table]
+[answer]	{0, 0, 0, 0; 0, 1, X, X+1; 0, X, X+1, 1; 0, X+1, 1, X}
+
+[mod]		7
+[mod-poly]	{1,0}
+[add-table]
+[answer]	{0, 1, 2, 3, 4, 5, 6; 1, 2, 3, 4, 5, 6, 0; 2, 3, 4, 5, 6, 0, 1; 3, 4, 5, 6, 0, 1, 2; 4, 5, 6, 0, 1, 2, 3; 5, 6, 0, 1, 2, 3, 4; 6, 0, 1, 2, 3, 4, 5}
+
+[mod]		7
+[mod-poly]	{1,0}
+[mult-table]
+[answer]	{0, 0, 0, 0, 0, 0, 0; 0, 1, 2, 3, 4, 5, 6; 0, 2, 4, 6, 1, 3, 5; 0, 3, 6, 2, 5, 1, 4; 0, 4, 1, 5, 2, 6, 3; 0, 5, 3, 1, 6, 4, 2; 0, 6, 5, 4, 3, 2, 1}
+
+[mod]		5
+[mod-poly]	{1,0,2}
+[display-field]
+[a]		{1,1}
+[answer]	X+1
+
+[mod]		5
+[mod-poly]	{1,0,2}
+[display-field]
+[a]		{1,0,0}
+[answer]	3
+
+[mod]		7
+[mod-poly]	{2,-2}
+[display-field]
+[a]		{1,1,1}
+[answer]	3
+
+[mod]		2
+[mod-poly]	{1,1,1}
+[add-field]
+[a]		{1,1}
+[b]		{1,0}
+[answer]	1
+
+[mod]		7
+[mod-poly]	{2,-2}
+[add-field]
+[a]		{1,1,1}
+[b]		{2}
+[answer]	5
+
+[mod]		3
+[mod-poly]	{1,0,2,1}
+[subtract-field]
+[a]		{1,1,2}
+[b]		{2,0,1}
+[answer]	2X^2+X+1
+
+[mod]		3
+[mod-poly]	{1,0,2,1}
+[multiply-field]
+[a]		{1,1}
+[b]		{1,2}
+[answer]	X^2+2
+
+[mod]		3
+[mod-poly]	{1,0,2,1}
+[multiply-field]
+[a]		{1,0,0}
+[b]		{1,0}
+[answer]	X+2
+
+[mod]		2
+[mod-poly]	{1,1,1}
+[inverse-field]
+[a]		{1,0}
+[answer]	X+1
+
+[mod]		2
+[mod-poly]	{1,1,0}
+[inverse-field]
+[a]		{1,0}
+[answer]	ERROR
+
+[mod]		2
+[mod-poly]	{1,1,1}
+[division-field]
+[a]		{1,0}
+[b]		{1,0}
+[answer]	1
+
+[mod]		2
+[mod-poly]	{1,1,1}
+[division-field]
+[a]		{1}
+[b]		{1,0}
+[answer]	X+1
+
+[mod]		2
+[mod-poly]	{1,1,1}
+[division-field]
+[a]		{1}
+[b]		{}
+[answer]	ERROR
+
+[mod]		5
+[mod-poly]	{1,0,2}
+[equals-field]
+[a]		{1,0,0}
+[b]		{3}
+[answer]	TRUE
+
+[mod]		7
+[mod-poly]	{1,0,0,2}
+[primitive]
+[a]		{1,0}
+[answer]:	FALSE
+
+[mod]		7
+[mod-poly]	{1,0,0,2}
+[primitive]
+[a]		{1,0,1}
+[answer]:	TRUE
+
+[mod]		7
+[mod-poly]	{1,0,6}
+[find-prim]
+[answer]:	2X+6
+
+[mod]		7
+[mod-poly]	{1,0,6}
+[find-prim]
+[answer]:	X+2
