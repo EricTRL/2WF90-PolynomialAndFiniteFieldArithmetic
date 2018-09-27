@@ -144,7 +144,8 @@ public class InputReader {
         }
         
         //create the Computation with the data that was just read
-        return new Computation(x, y, radix, type, m);
+        //return new Computation(x, y, radix, type, m);
+        return null;
     }
 }    
 

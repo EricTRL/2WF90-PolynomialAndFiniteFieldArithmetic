@@ -1,5 +1,8 @@
 package nl.tue._2WF90.common;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+
 /**
  * This is the base class that is run.
  * It reads input with InputReader, applies any of the arithmetic functions
@@ -16,6 +19,21 @@ package nl.tue._2WF90.common;
 public class Arithmetic {
     //Main method
     public static void main(String args[]) {
-        
+        Polynomial poly = new Polynomial(new LinkedList<>(Arrays.asList(99, 0, 1, 5)));
+        System.out.println(poly);
+    }
+    
+    /**
+     * Method that returns whether a given, positive integer is prime
+     * @param p A positive integer
+     * @pre p >= 0
+     * @return true iff p is prime
+     */
+    public static boolean isPrime(int p) {
+        if (p <= 1) {
+            return false;
+        }
+        //TODO
+        return true;
     }
 }
