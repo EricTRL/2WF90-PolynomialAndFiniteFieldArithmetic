@@ -1,6 +1,7 @@
 package nl.tue._2WF90.common;
 
 import java.util.LinkedList;
+import java.util.Scanner;
 
 
 /**
@@ -30,7 +31,7 @@ public class Polynomial {
      * @return deg(poly), or -1 if poly == 0
      */
     public int getDegree() {
-        if (poly.isEmpty()) {
+        if (!hasDegree()) {
             return -1;
         }
         return poly.size();
@@ -41,18 +42,18 @@ public class Polynomial {
      * @return true iff poly.size() > 0
      */
     public boolean hasDegree() {
-        return !poly.isEmpty();
+        return !poly.isEmpty() && !(poly.peekFirst() == 0 && poly.size() == 1);
     }
     
     @Override
     public String toString() {
-        if (poly.isEmpty()) {
+        if (!hasDegree()) {
             return "0";
         }
         
         StringBuilder s = new StringBuilder();
         //start at highest polynomial
-        int order = poly.size();
+        int order = poly.size() - 1;
         for (int x : poly) {
             if (x != 0) {
                 s.append(x);
@@ -70,5 +71,31 @@ public class Polynomial {
         s.setLength(s.length() - 1);
         
         return s.toString();
+    }
+    
+    /**
+     * Converts a string to a polynomial
+     * @param s String in the specified input format. E.g. {4,0,5,6204}
+     * @return 
+     */
+    public static Polynomial stringToPolynomial(String s) {
+        Scanner sc = new Scanner(s);
+        LinkedList<Integer> l = new LinkedList<>();
+        boolean nonZeroElemFound = false;
+        
+        sc.useDelimiter(",|\\{|\\}");
+        while (sc.hasNextInt()) {
+            int next = sc.nextInt();
+            nonZeroElemFound = nonZeroElemFound || next != 0;
+            if (nonZeroElemFound) {
+                l.addLast(next);
+            }
+        }
+        
+        //handle 0-polynomials that are passed as {}
+        if (l.isEmpty()) {
+            l.addFirst(0);
+        }
+        return new Polynomial(l);
     }
 }

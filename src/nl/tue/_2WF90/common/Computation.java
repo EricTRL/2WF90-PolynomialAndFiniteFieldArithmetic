@@ -20,7 +20,9 @@ public class Computation {
     private final Polynomial f; //stores mod-poly in case Finite Field Arithmetic is performed
     private final Polynomial g; //stores a in case Finite Field Arithmetic is performed
     private final Polynomial h; //stores b in case Finite Field Arithmetic is performed
+    private final int deg; //degree to find (if type != [find-irred], this is unused
     private Polynomial answer;
+    private final boolean isPolynomialArithmetic;
     
     private final String type;
     private final int mod;
@@ -28,15 +30,32 @@ public class Computation {
     private boolean error = false; //indicates an error
     
     //constructor
-    public Computation(Polynomial f, Polynomial g, Polynomial h, String type, int mod) {
+    public Computation(Polynomial f, Polynomial g, Polynomial h, String type, int mod, boolean polyArithmetic) {
+        this(f, g, h, type, mod, polyArithmetic, -1);
+    }
+    
+    public Computation(Polynomial f, Polynomial g, Polynomial h, String type, int mod, boolean polyArithmetic, int deg) {
         this.f = f;
         this.g = g;
         this.h = h;
         this.type = type;
         this.mod = mod;
+        this.deg = deg;
+        this.isPolynomialArithmetic = polyArithmetic;
+        
+        //safety check
+        if (!type.equals("[INVALID]") && mod < 2) {
+            System.err.println("ERROR: Invalid Mod! Should be >= 2, but got <" + mod + ">");
+        }
     }
     
+    public boolean isPolynomialArithmetic() {
+        return isPolynomialArithmetic;
+    }
     
+    public boolean isFiniteFieldArithmetic() {
+        return !isPolynomialArithmetic;
+    }
     
     /*Other stuff*/
     @Override

@@ -21,6 +21,10 @@ public class Arithmetic {
     public static void main(String args[]) {
         Polynomial poly = new Polynomial(new LinkedList<>(Arrays.asList(99, 0, 1, 5)));
         System.out.println(poly);
+        System.out.println(Polynomial.stringToPolynomial("{9,07,5,0}"));
+        System.out.println(Polynomial.stringToPolynomial("{0,5,5,0}"));
+        System.out.println(Polynomial.stringToPolynomial("{}"));
+        System.out.println(Polynomial.stringToPolynomial("{0,0,0,0}"));
     }
     
     /**

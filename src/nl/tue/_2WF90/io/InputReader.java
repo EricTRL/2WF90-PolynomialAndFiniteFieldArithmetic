@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Scanner;
+import nl.tue._2WF90.common.Polynomial;
 
 /**
  * Reads (and parses) the inputs from a given input stream (E.g. System.in)
@@ -58,10 +59,12 @@ public class InputReader {
      */
     public Computation getNextComputation() {        
         String type = null;
-        int radix = -1;
-        String x = "1";
-        String y = "1";
-        String m = "[INVALID]";
+        boolean polyArithmetic = false;
+        int mod = -1;
+        int deg = -1;
+        String f = "0";
+        String g = "0";
+        String h = "0";
         boolean EoF = true;
         
         //if true, empty lines will be skipped instead of separating computations
@@ -104,30 +107,66 @@ public class InputReader {
             //be before radix)
             String next = sc.next();
             switch (next) {
-                case "[radix]": radix = sc.nextInt(); break;
-                case "[add]": 
-                case "[subtract]": 
-                case "[multiply]":
-                case "[karatsuba]":
-                case "[reduce]":
-                case "[inverse]":
-                case "[euclid]":
+                case "[mod]":
+                    mod = sc.nextInt();
+                    break;
+                //polynomial arithmetic
+                case "[display-poly]": 
+                case "[add-poly]": 
+                case "[subtract-poly]":
+                case "[multiply-poly]":
+                case "[long-div-poly]":
+                case "[euclid-poly]":
+                case "[equals-poly-mod]":
+                case "[irreducible]":
+                case "[find-irred]":
+                    polyArithmetic = true;
                     type = next;
                     break;
-                case "[x]": x = sc.next(); break;
-                case "[y]": y = sc.next(); break;
-                case "[m]": m = sc.next(); break;
+                //final-field-arithmetic
+                case "[add-table]":    
+                case "[mult-table]":  
+                case "[display-field]":    
+                case "[add-field]": 
+                case "[subtract-field]":    
+                case "[multiply-field]": 
+                case "[inverse-field]": 
+                case "[division-field]":    
+                case "[equals-field]": 
+                case "[primitive]": 
+                case "[find-prim]": 
+                    polyArithmetic = false;
+                    type = next;
+                    break;
+                case "[f]":
+                case "[mod-poly]":
+                    f = sc.next();
+                    break;
+                case "[g]":
+                case "[a]":
+                    g = sc.next();
+                    break;
+                case "[h]":
+                case "[b]":
+                    h = sc.next();
+                    break;
+                case "[deg]":
+                    deg = sc.nextInt();
+                    break;
                 case "[answer]":
                 case "[count-add]":
                 case "[count-mul]":
                 case "[answ-a]":
                 case "[answ-b]":
                 case "[answ-d]":
+                case "[answ-q]":
+                case "[answ-r]":
                     //ignore these values
                     break;
                 default: 
                     //any other value should not break the code (as they cannot
-                    //occur), but this lets us know during testing
+                    //occur), but this lets us know during testing (in case we
+                    //make typos)
                     type = (type == null) ? "[INVALID]" : type;
                     System.err.println("Unexpected input read: " + next); break;
             }
@@ -138,14 +177,9 @@ public class InputReader {
         if (EoF && type == null) {
             return null;
         }
-      
-        if (type == null) {
-            type = "[INVALID]";
-        }
         
         //create the Computation with the data that was just read
-        //return new Computation(x, y, radix, type, m);
-        return null;
+        return new Computation(Polynomial.stringToPolynomial(f), Polynomial.stringToPolynomial(g), Polynomial.stringToPolynomial(h), type, mod, polyArithmetic, deg);
     }
 }    
 
