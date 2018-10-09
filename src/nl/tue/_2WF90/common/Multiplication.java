@@ -40,8 +40,10 @@ public class Multiplication {
         Polynomial answerToAdd = new Polynomial("");
         //equal(x,y); //Make the numbers of the same size by adding 0's to the smaller number
         Iterator<Integer> it_b = b.descendingIterator();
+        int i = b.getSize()-1;
         while (it_b.hasNext()) {
             int y = it_b.next();
+            int j = a.getSize()-1;
             Iterator<Integer> it_a = a.descendingIterator();
             while (it_a.hasNext()) {
                 int x = it_a.next();
@@ -59,3 +61,4 @@ public class Multiplication {
         Arithmetic.removeLeadingZeros(answer);
         return answer;
     }
+}

@@ -146,6 +146,15 @@ public class Polynomial {
         poly.addLast(x);
     }
     
+    /**
+     * Gets the size of the polynomial
+     * @param x the index to get from the polynomial
+     * @return the coefficient at index x from the polynomial
+     */
+    public int get(int x) {
+        return poly.get(x);
+    }
+    
     @Override
     public String toString() {
         if (!hasDegree()) {
