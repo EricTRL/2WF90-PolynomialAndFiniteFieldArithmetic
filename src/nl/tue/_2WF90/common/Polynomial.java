@@ -39,6 +39,24 @@ public class Polynomial {
         this(new LinkedList<>(poly));
     }
     
+    public Polynomial() {
+        this((LinkedList) null);
+    }
+    
+    /**
+     * Allows construction of iX^termIndex
+     * @param i Leading coefficient
+     * @param degree degree
+     */
+    public Polynomial(int i, int degree) {
+        this.poly = new LinkedList<>();
+        
+        for (int j = 0; j < degree; j++) {
+            poly.addFirst(0);
+        }
+        poly.addFirst(i);
+    }
+    
     public Polynomial(int i) {
         this(new LinkedList<>(Arrays.asList(i)));
     }
