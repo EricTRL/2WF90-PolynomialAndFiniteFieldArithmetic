@@ -87,14 +87,14 @@ public class Polynomial {
      * Gets the number of the highest degree
      * @return the number of the highest degree
      */
-    public int getHighestDegree() {
+    public int getLeadingTerm() {
         return poly.getFirst();
     }
     
     /**
      * Removes the highest degree number from the Polynomial
      */
-    public int removeHighestDegree() {
+    public int removeLeadingTerm() {
         return poly.removeFirst();
     }
     
@@ -102,7 +102,7 @@ public class Polynomial {
      * Gets the number of the lowest degree
      * @return the number of the lowest degree
      */
-    public int getLowestDegree() {
+    public int getLowestTerm() {
         return poly.getLast();
     }
     

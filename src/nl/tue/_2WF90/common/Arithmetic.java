@@ -27,6 +27,8 @@ public class Arithmetic {
         System.out.println(new Polynomial("{0,5,5,0}"));
         System.out.println(new Polynomial("{}"));
         System.out.println(new Polynomial("{0,0,0,0}"));
+        
+        System.out.println(divide(new Polynomial("{1,0,0,5,3}"), new Polynomial("{1,0}")));
     }
     
     /**
@@ -52,8 +54,8 @@ public class Arithmetic {
      * @return x
      */
     public static Polynomial removeLeadingZeros(Polynomial x) {
-        while (x.getHighestDegree() == 0 && x.hasDegree()) {
-            x.removeHighestDegree();
+        while (x.getLeadingTerm() == 0 && x.hasDegree()) {
+            x.removeLeadingTerm();
         }
         return x;
     }
@@ -105,7 +107,7 @@ public class Arithmetic {
         //loop over the high-order words that x has but y does not have + 1
         //E.g. x = 210; y = 40 -> loop over 2 and 1
         for(int i = 0; i < k - l + 1; i++) { //LINE 3 AlGO
-            q.addLast((r.get(i)*b+r.get(i+1))/y.getHighestDegree()); //LINE 4 ALGO
+            q.addLast((r.get(i)*b+r.get(i+1))/y.getLeadingTerm()); //LINE 4 ALGO
             if (q.getLast() >= b) { //LINE 5 ALGO
                 q.removeLast();
                 q.addLast(b-1);
