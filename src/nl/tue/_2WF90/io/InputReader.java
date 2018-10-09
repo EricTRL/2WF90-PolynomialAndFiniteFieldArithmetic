@@ -154,8 +154,6 @@ public class InputReader {
                     deg = sc.nextInt();
                     break;
                 case "[answer]":
-                case "[count-add]":
-                case "[count-mul]":
                 case "[answ-a]":
                 case "[answ-b]":
                 case "[answ-d]":
@@ -179,7 +177,7 @@ public class InputReader {
         }
         
         //create the Computation with the data that was just read
-        return new Computation(Polynomial.stringToPolynomial(f), Polynomial.stringToPolynomial(g), Polynomial.stringToPolynomial(h), type, mod, polyArithmetic, deg);
+        return new Computation(new Polynomial(f), new Polynomial(g), new Polynomial(h), type, mod, polyArithmetic, deg);
     }
 }    
 

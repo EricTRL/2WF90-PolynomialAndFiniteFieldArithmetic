@@ -1,6 +1,10 @@
 package nl.tue._2WF90.common;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -23,7 +27,41 @@ public class Polynomial {
     private final LinkedList<Integer> poly;
     
     public Polynomial(LinkedList<Integer> poly) {
-        this.poly = poly;
+        if (poly == null || poly.isEmpty()) {
+            this.poly = new LinkedList<>();
+            this.poly.addFirst(0);
+        } else {
+            this.poly = poly;
+        }
+    }
+    
+    public Polynomial(List<Integer> poly) {
+        this(new LinkedList<>(poly));
+    }
+    
+    public Polynomial(int i) {
+        this(new LinkedList<>(Arrays.asList(i)));
+    }
+    
+    public Polynomial(String s) {
+        Scanner sc = new Scanner(s);
+        LinkedList<Integer> l = new LinkedList<>();
+        boolean nonZeroElemFound = false;
+        
+        sc.useDelimiter(",|\\{|\\}"); //use commas, {, and } as a separator
+        while (sc.hasNextInt()) {
+            int next = sc.nextInt();
+            nonZeroElemFound = nonZeroElemFound || next != 0;
+            if (nonZeroElemFound) {
+                l.addLast(next);
+            }
+        }
+        
+        //handle 0-polynomials that are passed as {}
+        if (l.isEmpty()) {
+            l.addFirst(0);
+        }
+        this.poly = l;
     }
     
     /**
@@ -34,7 +72,7 @@ public class Polynomial {
         if (!hasDegree()) {
             return -1;
         }
-        return poly.size();
+        return poly.size()-1;
     }
     
     /**
@@ -42,7 +80,46 @@ public class Polynomial {
      * @return true iff poly.size() > 0
      */
     public boolean hasDegree() {
-        return !poly.isEmpty() && !(poly.peekFirst() == 0 && poly.size() == 1);
+        return !(poly.peekFirst() == 0 && poly.size() == 1);
+    }
+    
+    /**
+     * Gets the number of the highest degree
+     * @return the number of the highest degree
+     */
+    public int getHighestDegree() {
+        return poly.getFirst();
+    }
+    
+    /**
+     * Removes the highest degree number from the Polynomial
+     */
+    public int removeHighestDegree() {
+        return poly.removeFirst();
+    }
+    
+    /**
+     * Gets the number of the lowest degree
+     * @return the number of the lowest degree
+     */
+    public int getLowestDegree() {
+        return poly.getLast();
+    }
+    
+    /**
+     * Gets an (ascending) iterator over the elements of the Polynomial 
+     * @return ascending iterator over the elements of the polynomial
+     */
+    public Iterator<Integer> iterator() {
+        return poly.iterator();
+    }
+    
+    /**
+     * Gets a descending iterator over the elements of the polynomial
+     * @return descending Iterator over the elements of the Polynomial 
+     */
+    public Iterator<Integer> descendingIterator() {
+        return poly.descendingIterator();
     }
     
     @Override
@@ -74,28 +151,10 @@ public class Polynomial {
     }
     
     /**
-     * Converts a string to a polynomial
-     * @param s String in the specified input format. E.g. {4,0,5,6204}
+     * Gives the polynomial
      * @return 
      */
-    public static Polynomial stringToPolynomial(String s) {
-        Scanner sc = new Scanner(s);
-        LinkedList<Integer> l = new LinkedList<>();
-        boolean nonZeroElemFound = false;
-        
-        sc.useDelimiter(",|\\{|\\}");
-        while (sc.hasNextInt()) {
-            int next = sc.nextInt();
-            nonZeroElemFound = nonZeroElemFound || next != 0;
-            if (nonZeroElemFound) {
-                l.addLast(next);
-            }
-        }
-        
-        //handle 0-polynomials that are passed as {}
-        if (l.isEmpty()) {
-            l.addFirst(0);
-        }
-        return new Polynomial(l);
+    public ArrayList<Integer> asArrayList() {
+        return new ArrayList<>(poly);
     }
 }
