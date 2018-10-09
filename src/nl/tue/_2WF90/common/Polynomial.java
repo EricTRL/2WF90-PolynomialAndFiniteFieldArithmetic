@@ -157,4 +157,32 @@ public class Polynomial {
     public ArrayList<Integer> asArrayList() {
         return new ArrayList<>(poly);
     }
+
+    /**
+     * Function that adds leading zeros to a polynomial (useful when adding or subtracting)
+     * @param z amount of leading zeros that need to be added
+     * @post this.poly has z leading zeros
+     */
+    public void addZeros(int z) {
+        for (int i = 0; i < z; i++) {
+            poly.addFirst(0);
+        }
+    }
+
+    /**
+     * Removes all the leading zeros from this polynomial
+     * @post removes all the leading zeros from the polynomial
+     */
+    public void removeZeros() {
+        Iterator<Integer> it = iterator();
+        while (it.hasNext()) {
+            int x = it.next();
+            if (x==0) {
+                it.remove();
+            } else if (x!=0) {
+                break;
+            }
+        }
+    }
+
 }
