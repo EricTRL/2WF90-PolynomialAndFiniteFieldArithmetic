@@ -122,6 +122,30 @@ public class Polynomial {
         return poly.descendingIterator();
     }
     
+    /**
+     * Gets the size of the polynomial
+     * @return size of the polynomial
+     */
+    public int getSize() {
+        return poly.size();
+    }
+    
+    /**
+     * Adds a coefficient to the front of the polynomial
+     * @param x the leading coefficient to add
+     */
+    public void addFirst(int x) {
+        poly.addFirst(x);
+    }
+    
+    /**
+     * Adds a coefficient to the end of the polynomial
+     * @param x the smallest coefficient to add
+     */
+    public void addLast(int x) {
+        poly.addLast(x);
+    }
+    
     @Override
     public String toString() {
         if (!hasDegree()) {
