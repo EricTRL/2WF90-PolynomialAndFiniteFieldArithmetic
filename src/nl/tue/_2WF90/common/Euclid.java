@@ -25,14 +25,14 @@ public class Euclid {
         Polynomial a = new Polynomial(aList);
         Polynomial b = new Polynomial(bList);
         
-        euclid(a,b,16,null);
+        euclid(a,b,null); //call without using computation
     }
     
-    public static LinkedList<Integer> euclid(Computation c) {
-        return euclid(c.getX(), c.getY(), c.getRadix(), c);
+    public static Polynomial euclid(Computation c) {
+        return euclid(c.getX(), c.getY(), c);
     }
     
-    public static LinkedList<Integer> euclid(Polynomial a, Polynomial b, Computation c) {
+    public static Polynomial euclid(Polynomial a, Polynomial b, Computation c) {
         //Duplicate a and b for output only
         List<Integer> inputA = (ArrayList) a.asArrayList().clone();
         List<Integer> inputB = (ArrayList) b.asArrayList().clone();
@@ -47,17 +47,15 @@ public class Euclid {
         Polynomial u = new Polynomial(new LinkedList<>(Arrays.asList(0)));
         Polynomial v = new Polynomial(new LinkedList<>(Arrays.asList(1)));
         
-        
         ////////////////TODO switch thang
         //Set this boolean to true if X and Y get swapped, such that a1 and b1 are correct
         Boolean switched = false;
         
         //Make sure x > y
         if(Arithmetic.isLessThan(a,b)){
-            LinkedList<Integer> dummy = (LinkedList) x.clone();
-            Polynomial dummy1 = new Polynomial(x.asArrayList())
-            x = (LinkedList) y.clone();
-            y = (LinkedList) dummy.clone();
+            Polynomial dummy = (Polynomial) x.clone();
+            x = (Polynomial) y.clone();
+            y = (Polynomial) dummy.clone();
             switched = true;
         }
         ////////////////////////
@@ -78,7 +76,7 @@ public class Euclid {
         
         //Check if x and y were switched
         if(switched){
-            a2 = a1;
+            a2 = a1;//TODO change variables?
             a1 = b1;
             b1 = a2;
         }
