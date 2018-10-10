@@ -23,7 +23,7 @@ import java.util.Scanner;
  * 
  * @since 27 SEPTEMBER 2018
  */
-public class Polynomial {
+public class Polynomial{
     private final LinkedList<Integer> poly;
     
     public Polynomial(LinkedList<Integer> poly) {
@@ -234,6 +234,14 @@ public class Polynomial {
                 break;
             }
         }
+    }
+    
+    /**
+     * Clones this object
+     * @return an exact copy
+     */
+    public Polynomial clone() {
+        return this.clone();
     }
 
 }
