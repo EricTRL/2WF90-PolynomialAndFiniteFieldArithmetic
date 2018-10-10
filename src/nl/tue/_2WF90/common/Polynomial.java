@@ -39,6 +39,24 @@ public class Polynomial {
         this(new LinkedList<>(poly));
     }
     
+    public Polynomial() {
+        this((LinkedList) null);
+    }
+    
+    /**
+     * Allows construction of iX^termIndex
+     * @param i Leading coefficient
+     * @param degree degree
+     */
+    public Polynomial(int i, int degree) {
+        this.poly = new LinkedList<>();
+        
+        for (int j = 0; j < degree; j++) {
+            poly.addFirst(0);
+        }
+        poly.addFirst(i);
+    }
+    
     public Polynomial(int i) {
         this(new LinkedList<>(Arrays.asList(i)));
     }
@@ -87,14 +105,14 @@ public class Polynomial {
      * Gets the number of the highest degree
      * @return the number of the highest degree
      */
-    public int getHighestDegree() {
+    public int getLeadingCoefficient() {
         return poly.getFirst();
     }
     
     /**
      * Removes the highest degree number from the Polynomial
      */
-    public int removeHighestDegree() {
+    public int removeLeadingCoefficient() {
         return poly.removeFirst();
     }
     
@@ -102,7 +120,7 @@ public class Polynomial {
      * Gets the number of the lowest degree
      * @return the number of the lowest degree
      */
-    public int getLowestDegree() {
+    public int getLowestCoefficient() {
         return poly.getLast();
     }
     
@@ -120,6 +138,39 @@ public class Polynomial {
      */
     public Iterator<Integer> descendingIterator() {
         return poly.descendingIterator();
+    }
+    
+    /**
+     * Gets the size of the polynomial
+     * @return size of the polynomial
+     */
+    public int getSize() {
+        return poly.size();
+    }
+    
+    /**
+     * Adds a coefficient to the front of the polynomial
+     * @param x the leading coefficient to add
+     */
+    public void addFirst(int x) {
+        poly.addFirst(x);
+    }
+    
+    /**
+     * Adds a coefficient to the end of the polynomial
+     * @param x the smallest coefficient to add
+     */
+    public void addLast(int x) {
+        poly.addLast(x);
+    }
+    
+    /**
+     * Gets the size of the polynomial
+     * @param x the index to get from the polynomial
+     * @return the coefficient at index x from the polynomial
+     */
+    public int get(int x) {
+        return poly.get(x);
     }
     
     @Override
@@ -157,4 +208,32 @@ public class Polynomial {
     public ArrayList<Integer> asArrayList() {
         return new ArrayList<>(poly);
     }
+
+    /**
+     * Function that adds leading zeros to a polynomial (useful when adding or subtracting)
+     * @param z amount of leading zeros that need to be added
+     * @post this.poly has z leading zeros
+     */
+    public void addZeros(int z) {
+        for (int i = 0; i < z; i++) {
+            poly.addFirst(0);
+        }
+    }
+
+    /**
+     * Removes all the leading zeros from this polynomial
+     * @post removes all the leading zeros from the polynomial
+     */
+    public void removeZeros() {
+        Iterator<Integer> it = iterator();
+        while (it.hasNext()) {
+            int x = it.next();
+            if (x==0) {
+                it.remove();
+            } else if (x!=0) {
+                break;
+            }
+        }
+    }
+
 }
