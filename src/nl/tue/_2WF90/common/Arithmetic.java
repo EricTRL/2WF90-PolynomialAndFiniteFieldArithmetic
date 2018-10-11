@@ -1,8 +1,6 @@
 package nl.tue._2WF90.common;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -23,8 +21,8 @@ public class Arithmetic {
     public static void main(String args[]) {
         Polynomial poly = new Polynomial(new LinkedList<>(Arrays.asList(99, 0, 1, 5)));
         System.out.println(poly);
-        System.out.println(new Polynomial("{9,07,5,0}"));
-        System.out.println(new Polynomial("{0,5,5,0}"));
+        System.out.println(new Polynomial("{-9,07,-5,0}"));
+        System.out.println(new Polynomial("{0,1,-5,0}"));
         System.out.println(new Polynomial("{}"));
         System.out.println(new Polynomial("{0,0,0,0}"));
         

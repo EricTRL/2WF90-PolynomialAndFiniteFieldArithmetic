@@ -1,12 +1,12 @@
 
 package nl.tue._2WF90.io;
 
-import arithmetic.Computation;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Scanner;
+import nl.tue._2WF90.common.Computation;
 import nl.tue._2WF90.common.Polynomial;
 
 /**
