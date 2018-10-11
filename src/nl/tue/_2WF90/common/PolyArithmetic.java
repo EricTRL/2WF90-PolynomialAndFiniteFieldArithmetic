@@ -15,6 +15,12 @@ import java.util.LinkedList;
  * @since 27 SEPTEMBER 2018
  */
 public class PolyArithmetic {
+    public static void main(String[] args) {
+        Polynomial a = new Polynomial("{-6,3,0,6}");
+        Polynomial b = new Polynomial("{0,5,1,-4}");
+        System.out.println(polySubtract(a,b,7).toString());
+    }
+
     /**
      * Polynomial addition (mod p)
      * @param a Polynomial a
@@ -22,20 +28,24 @@ public class PolyArithmetic {
      * @param p modulo p, with p a prime, p < (bound)
      * @return a+b(mod p)
      */
-    public Polynomial polyAdd(Polynomial a, Polynomial b, int p) {
+    public static Polynomial polyAdd(Polynomial a, Polynomial b, int p) {
         Polynomial anew = new Polynomial(a.asArrayList());
         Polynomial bnew = new Polynomial(b.asArrayList());
         LinkedList<Integer> ans = new LinkedList<>();
-        Iterator<Integer> ita = anew.descendingIterator(); Iterator<Integer> itb = bnew.descendingIterator();
         //We add leading zeros to make the addition easier
+        System.out.println(anew.asArrayList().size()+", "+bnew.asArrayList().size());
         if (anew.getDegree()>bnew.getDegree()) {
             bnew.addZeros(anew.getDegree()-bnew.getDegree());
         } else {
             anew.addZeros(bnew.getDegree()-anew.getDegree());
         }
-
+        Iterator<Integer> ita = anew.iterator(); Iterator<Integer> itb = bnew.iterator();
+        System.out.println(anew.asArrayList().size()+", "+bnew.asArrayList().size());
         while (ita.hasNext() && itb.hasNext()) {
-            ans.add((ita.next()+itb.next())%p);
+            System.out.println("Answer added");
+            int answer = Math.floorMod((ita.next()+itb.next()), p);
+            System.out.println(answer);
+            ans.add(answer);
         }
         return new Polynomial(ans);
     }
@@ -47,20 +57,19 @@ public class PolyArithmetic {
      * @param p modulo p, with p a prime, p < (bound)
      * @return a-b(mod p)
      */
-    public Polynomial polySubtract(Polynomial a, Polynomial b, int p) {
+    public static Polynomial polySubtract(Polynomial a, Polynomial b, int p) {
         LinkedList<Integer> ans = new LinkedList<>();
         Polynomial an = new Polynomial(a.asArrayList());
         Polynomial bn = new Polynomial(b.asArrayList());
-        Iterator<Integer> ita = an.descendingIterator(); Iterator<Integer> itb = bn.descendingIterator();
         //Add leading zeros to make subtraction a lot easier
         if (an.getDegree()>bn.getDegree()) {
             bn.addZeros(an.getDegree()-bn.getDegree());
         } else {
             an.addZeros(bn.getDegree()-an.getDegree());
         }
+        Iterator<Integer> ita = an.iterator(); Iterator<Integer> itb = bn.iterator();
         while (ita.hasNext() && itb.hasNext()) {
-            int c = (ita.next()-itb.next()%p);
-            if (c<0) c = p-c;
+            int c = Math.floorMod(ita.next()-itb.next(), p);
             ans.add(c);
         }
         return new Polynomial(ans);
