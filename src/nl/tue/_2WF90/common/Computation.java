@@ -1,7 +1,4 @@
-package arithmetic;
-
-import java.util.LinkedList;
-import nl.tue._2WF90.common.Polynomial;
+package nl.tue._2WF90.common;
 
 /**
  * Data structure that stores a computation. Includes things like the type

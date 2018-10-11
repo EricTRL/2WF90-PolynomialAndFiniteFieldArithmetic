@@ -190,22 +190,28 @@ public class Polynomial{
         
         StringBuilder s = new StringBuilder();
         //start at highest polynomial
+        boolean notLeadingTerm = false;
         int order = poly.size() - 1;
         for (int x : poly) {
             if (x != 0) {
-                s.append(x);
+                if (notLeadingTerm || x < 0) {
+                    //add + or - (depending on Sign of X)
+                    s.append(x > 0 ? "+" : "-");
+                }
+                notLeadingTerm = true;
+                
+                if (x != 1 && x != -1) {
+                    s.append(Math.abs(x));
+                }
                 if (order > 0) {
                     s.append("X");
                 }
                 if (order > 1) {
                     s.append("^").append(order);
                 }
-                s.append("+");
-            }
+            } //else skip
             order--;
         }
-        //remove the last '+' that we added
-        s.setLength(s.length() - 1);
         
         return s.toString();
     }
