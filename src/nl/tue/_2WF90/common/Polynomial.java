@@ -23,7 +23,7 @@ import java.util.Scanner;
  * 
  * @since 27 SEPTEMBER 2018
  */
-public class Polynomial {
+public class Polynomial{
     private final LinkedList<Integer> poly;
     
     public Polynomial(LinkedList<Integer> poly) {
@@ -37,6 +37,24 @@ public class Polynomial {
     
     public Polynomial(List<Integer> poly) {
         this(new LinkedList<>(poly));
+    }
+    
+    public Polynomial() {
+        this((LinkedList) null);
+    }
+    
+    /**
+     * Allows construction of iX^termIndex
+     * @param i Leading coefficient
+     * @param degree degree
+     */
+    public Polynomial(int i, int degree) {
+        this.poly = new LinkedList<>();
+        
+        for (int j = 0; j < degree; j++) {
+            poly.addFirst(0);
+        }
+        poly.addFirst(i);
     }
     
     public Polynomial(int i) {
@@ -87,14 +105,14 @@ public class Polynomial {
      * Gets the number of the highest degree
      * @return the number of the highest degree
      */
-    public int getHighestDegree() {
+    public int getLeadingCoefficient() {
         return poly.getFirst();
     }
     
     /**
      * Removes the highest degree number from the Polynomial
      */
-    public int removeHighestDegree() {
+    public int removeLeadingCoefficient() {
         return poly.removeFirst();
     }
     
@@ -102,7 +120,7 @@ public class Polynomial {
      * Gets the number of the lowest degree
      * @return the number of the lowest degree
      */
-    public int getLowestDegree() {
+    public int getLowestCoefficient() {
         return poly.getLast();
     }
     
@@ -122,6 +140,48 @@ public class Polynomial {
         return poly.descendingIterator();
     }
     
+    /**
+     * Gets the size of the polynomial
+     * @return size of the polynomial
+     */
+    public int getSize() {
+        return poly.size();
+    }
+    
+    /**
+     * Adds a coefficient to the front of the polynomial
+     * @param x the leading coefficient to add
+     */
+    public void addFirst(int x) {
+        poly.addFirst(x);
+    }
+    
+    /**
+     * Adds a coefficient to the end of the polynomial
+     * @param x the smallest coefficient to add
+     */
+    public void addLast(int x) {
+        poly.addLast(x);
+    }
+    
+    /**
+     * Gets the coefficient at index x of the polynomial
+     * @param x the index to get from the polynomial
+     * @return the coefficient at index x from the polynomial
+     */
+    public int get(int x) {
+        return poly.get(x);
+    }
+    
+    /**
+     * Sets the coefficient at index x of the polynomial to y
+     * @param x the index to set at
+     * @param y the coefficient to set index x to
+     */
+    public void set(int x, int y) {
+        poly.set(x, y);
+    }
+    
     @Override
     public String toString() {
         if (!hasDegree()) {
@@ -130,22 +190,28 @@ public class Polynomial {
         
         StringBuilder s = new StringBuilder();
         //start at highest polynomial
+        boolean notLeadingTerm = false;
         int order = poly.size() - 1;
         for (int x : poly) {
             if (x != 0) {
-                s.append(x);
+                if (notLeadingTerm || x < 0) {
+                    //add + or - (depending on Sign of X)
+                    s.append(x > 0 ? "+" : "-");
+                }
+                notLeadingTerm = true;
+                
+                if (x != 1 && x != -1) {
+                    s.append(Math.abs(x));
+                }
                 if (order > 0) {
                     s.append("X");
                 }
                 if (order > 1) {
                     s.append("^").append(order);
                 }
-                s.append("+");
-            }
+            } //else skip
             order--;
         }
-        //remove the last '+' that we added
-        s.setLength(s.length() - 1);
         
         return s.toString();
     }
@@ -183,6 +249,14 @@ public class Polynomial {
                 break;
             }
         }
+    }
+    
+    /**
+     * Copies the polynomial
+     * @return an exact copy of the polynomial
+     */
+    public Polynomial copy() {
+        return new Polynomial(poly);
     }
 
 }
