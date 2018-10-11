@@ -165,12 +165,21 @@ public class Polynomial{
     }
     
     /**
-     * Gets the size of the polynomial
+     * Gets the coefficient at index x of the polynomial
      * @param x the index to get from the polynomial
      * @return the coefficient at index x from the polynomial
      */
     public int get(int x) {
         return poly.get(x);
+    }
+    
+    /**
+     * Sets the coefficient at index x of the polynomial to y
+     * @param x the index to set at
+     * @param y the coefficient to set index x to
+     */
+    public void set(int x, int y) {
+        poly.set(x, y);
     }
     
     @Override
