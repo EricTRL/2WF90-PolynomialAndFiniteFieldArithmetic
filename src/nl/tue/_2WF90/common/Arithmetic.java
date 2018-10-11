@@ -32,6 +32,19 @@ public class Arithmetic {
         Polynomial b = new Polynomial("1,-1");
         System.out.println("derp");
         System.out.println(Division.divide(a, b, 10000000));
+        
+        System.out.println(isPrime(0));
+        System.out.println(isPrime(1));
+        System.out.println(isPrime(2));
+        System.out.println(isPrime(3));
+        System.out.println(isPrime(4));
+        System.out.println(isPrime(5));
+        System.out.println(isPrime(6));
+        System.out.println(isPrime(37));
+        System.out.println(isPrime(49));
+        System.out.println(isPrime(1000000003));
+        
+        
     }
     
     /**
@@ -44,7 +57,19 @@ public class Arithmetic {
         if (p <= 1) {
             return false;
         }
-        //TODO
+        
+        if ((p & 1) == 0 && p != 2) {
+            //divisible by 2
+            return false;
+        }
+        
+        for (int i = 3; i <= Math.sqrt(p); i+=2) {
+            if ((p % i) == 0) {
+                System.out.println(p + " is NOT prime; p = " + i + " * " + p/i);
+                return false;
+            }
+        }
+        System.out.println(p + " is prime");
         return true;
     }
     
