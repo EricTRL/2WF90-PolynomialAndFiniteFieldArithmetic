@@ -34,8 +34,8 @@ public class Euclid {
     
     public static Polynomial euclid(Polynomial a, Polynomial b, Computation c) {
         //Duplicate a and b for output only
-        List<Integer> inputA = (ArrayList) a.asArrayList().clone();
-        List<Integer> inputB = (ArrayList) b.asArrayList().clone();
+        ArrayList<Integer> inputA = new ArrayList<>(a.asArrayList());
+        ArrayList<Integer> inputB = new ArrayList<>(b.asArrayList());
         
         //Declare variables
         Polynomial x = new Polynomial(new LinkedList<>(Arrays.asList(0)));
@@ -53,9 +53,9 @@ public class Euclid {
         
         //Make sure x > y
         if(Arithmetic.isLessThan(a,b)){
-            Polynomial dummy = (Polynomial) x.clone();
-            x = (Polynomial) y.clone();
-            y = (Polynomial) dummy.clone();
+            Polynomial dummy = x.copy();
+            x = y.copy();
+            y = dummy.copy();
             switched = true;
         }
         ////////////////////////

@@ -17,11 +17,12 @@ public class Division {
     /**
      * Calculates x (mod m)
      * @param x polynomial to be reduced
-     * @param m modulo
-     * @return x (mod m)
+     * @param m modulo polynomial
+     * @param p prime modulo with p < (bound)
+     * @return x (mod m) in Z/2Z
      */
-    public static Polynomial modulo(Polynomial x, int m) {
-        return divide(x, new Polynomial(m)).r;
+    public static Polynomial modulo(Polynomial x, Polynomial m, int p) {
+        return divide(x, m, p).r;
     }
     
     
@@ -30,9 +31,10 @@ public class Division {
      * that a = q*b + r
      * @param a Numerator Polynomial
      * @param b Denominator Polynomial
+     * @param p Modulo, with p is prime and p < (bound)
      * @return q,r such that a = q*b + r
      */
-    public static QuoRem divide(Polynomial a, Polynomial b) {
+    public static QuoRem divide(Polynomial a, Polynomial b, int p) {
         Polynomial q = new Polynomial();
         Polynomial r = new Polynomial();
         
@@ -45,8 +47,8 @@ public class Division {
             //Calculate lc(r)/lc(b)
             Polynomial coeff = new Polynomial(r.getLeadingCoefficient(), b.getLowestCoefficient());
             
-            q = PolyArithmetic.polyAdd(q, Multiplication.multiply(coeff, x));
-            r = PolyArithmetic.polySubtract(r, Multiplication.multiply(coeff, x));
+            q = PolyArithmetic.polyAdd(q, Multiplication.multiply(coeff, x), p);
+            r = PolyArithmetic.polySubtract(r, Multiplication.multiply(coeff, x), p);
             
             degR = r.getDegree();
         }

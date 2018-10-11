@@ -22,7 +22,7 @@ public class PolyArithmetic {
      * @param p modulo p, with p a prime, p < (bound)
      * @return a+b(mod p)
      */
-    public Polynomial polyAdd(Polynomial a, Polynomial b, int p) {
+    public static Polynomial polyAdd(Polynomial a, Polynomial b, int p) {
         Polynomial anew = new Polynomial(a.asArrayList());
         Polynomial bnew = new Polynomial(b.asArrayList());
         LinkedList<Integer> ans = new LinkedList<>();
@@ -47,7 +47,7 @@ public class PolyArithmetic {
      * @param p modulo p, with p a prime, p < (bound)
      * @return a-b(mod p)
      */
-    public Polynomial polySubtract(Polynomial a, Polynomial b, int p) {
+    public static Polynomial polySubtract(Polynomial a, Polynomial b, int p) {
         LinkedList<Integer> ans = new LinkedList<>();
         Polynomial an = new Polynomial(a.asArrayList());
         Polynomial bn = new Polynomial(b.asArrayList());

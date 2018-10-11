@@ -237,11 +237,11 @@ public class Polynomial{
     }
     
     /**
-     * Clones this object
-     * @return an exact copy
+     * Copies the polynomial
+     * @return an exact copy of the polynomial
      */
-    public Polynomial clone() {
-        return this.clone();
+    public Polynomial copy() {
+        return new Polynomial(poly);
     }
 
 }
