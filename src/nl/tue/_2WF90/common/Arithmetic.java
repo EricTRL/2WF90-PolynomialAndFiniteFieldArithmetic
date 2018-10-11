@@ -27,6 +27,11 @@ public class Arithmetic {
         System.out.println(new Polynomial("{0,0,0,0}"));
         
         //System.out.println(divide(new Polynomial("{1,0,0,5,3}"), new Polynomial("{1,0}")));
+        
+        Polynomial a = new Polynomial("1,0,-1");
+        Polynomial b = new Polynomial("1,-1");
+        System.out.println("derp");
+        System.out.println(Division.divide(a, b, 10000000));
     }
     
     /**

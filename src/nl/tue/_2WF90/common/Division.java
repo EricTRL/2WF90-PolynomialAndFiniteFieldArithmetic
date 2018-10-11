@@ -36,23 +36,24 @@ public class Division {
      */
     public static QuoRem divide(Polynomial a, Polynomial b, int p) {
         Polynomial q = new Polynomial();
-        Polynomial r = new Polynomial();
+        Polynomial r = a.copy();
         
         int degR = r.getDegree();
         int degB = b.getDegree();
-        while (r.getDegree() >= b.getDegree()) {
+        
+        while (degR >= degB) {
             //Determine X^(degR-degB)
-            Polynomial x = new Polynomial(1, degR - degB);
+            Polynomial x = new Polynomial(1, degR - degB);      
             
             //Calculate lc(r)/lc(b)
-            Polynomial coeff = new Polynomial(r.getLeadingCoefficient(), b.getLowestCoefficient());
+            Polynomial coeff = new Polynomial(r.getLeadingCoefficient()/b.getLeadingCoefficient());
             
-            q = PolyArithmetic.polyAdd(q, Multiplication.multiply(coeff, x), p);
-            r = PolyArithmetic.polySubtract(r, Multiplication.multiply(coeff, x), p);
+            q = PolyArithmetic.polyAdd(q, PolyMultiplication.polyMultiply(coeff, x, p), p);
+            
+            r = PolyArithmetic.polySubtract(r, PolyMultiplication.polyMultiply(PolyMultiplication.polyMultiply(coeff, x, p), b, p), p);
             
             degR = r.getDegree();
         }
-        
         return new QuoRem(q, r);
     }
     

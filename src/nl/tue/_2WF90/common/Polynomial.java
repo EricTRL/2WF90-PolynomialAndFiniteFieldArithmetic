@@ -182,6 +182,21 @@ public class Polynomial{
         poly.set(x, y);
     }
     
+    /**
+     * 
+     * @return 
+     */
+    public void specialSet(int index, int y) {
+        if (index < 0) {
+            while (index < poly.size()) {
+                
+            }
+        } else {
+            poly.set(index, y);
+        }
+    }
+    
+
     @Override
     public String toString() {
         if (!hasDegree()) {
@@ -200,7 +215,7 @@ public class Polynomial{
                 }
                 notLeadingTerm = true;
                 
-                if (x != 1 && x != -1) {
+                if ((x != 1 && x != -1) || order == 0) {
                     s.append(Math.abs(x));
                 }
                 if (order > 0) {
@@ -212,7 +227,7 @@ public class Polynomial{
             } //else skip
             order--;
         }
-        
+        //System.out.println(poly);
         return s.toString();
     }
     
@@ -237,18 +252,14 @@ public class Polynomial{
 
     /**
      * Removes all the leading zeros from this polynomial
+     * @return 
      * @post removes all the leading zeros from the polynomial
      */
-    public void removeZeros() {
-        Iterator<Integer> it = iterator();
-        while (it.hasNext()) {
-            int x = it.next();
-            if (x==0) {
-                it.remove();
-            } else if (x!=0) {
-                break;
-            }
+    public Polynomial removeZeros() {
+        while (getLeadingCoefficient() == 0 && hasDegree()) {
+            removeLeadingCoefficient();
         }
+        return this;
     }
     
     /**

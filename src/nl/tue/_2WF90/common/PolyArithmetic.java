@@ -33,21 +33,22 @@ public class PolyArithmetic {
         Polynomial bnew = new Polynomial(b.asArrayList());
         LinkedList<Integer> ans = new LinkedList<>();
         //We add leading zeros to make the addition easier
-        System.out.println(anew.asArrayList().size()+", "+bnew.asArrayList().size());
+        //System.out.println(anew.asArrayList().size()+", "+bnew.asArrayList().size());
         if (anew.getDegree()>bnew.getDegree()) {
             bnew.addZeros(anew.getDegree()-bnew.getDegree());
         } else {
             anew.addZeros(bnew.getDegree()-anew.getDegree());
         }
         Iterator<Integer> ita = anew.iterator(); Iterator<Integer> itb = bnew.iterator();
-        System.out.println(anew.asArrayList().size()+", "+bnew.asArrayList().size());
+        //System.out.println(anew.asArrayList().size()+", "+bnew.asArrayList().size());
         while (ita.hasNext() && itb.hasNext()) {
-            System.out.println("Answer added");
+            //System.out.println("Answer added");
             int answer = Math.floorMod((ita.next()+itb.next()), p);
-            System.out.println(answer);
+            //System.out.println(answer);
             ans.add(answer);
         }
-        return new Polynomial(ans);
+        
+        return new Polynomial(ans).removeZeros();
     }
 
     /**
@@ -72,7 +73,6 @@ public class PolyArithmetic {
             int c = Math.floorMod(ita.next()-itb.next(), p);
             ans.add(c);
         }
-        return new Polynomial(ans);
+        return new Polynomial(ans).removeZeros();
     }
-
 }
