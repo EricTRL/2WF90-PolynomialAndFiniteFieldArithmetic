@@ -19,78 +19,92 @@ import java.util.List;
 public class Euclid {
     
     public static void main(String[] args) {
-        LinkedList<Integer> aList = new LinkedList<>(Computation.stringToList("5896363941d32eccd5c"));
-        LinkedList<Integer> bList = new LinkedList<>(Computation.stringToList("c7eb8a91fbad0d1c1f03"));
         
-        Polynomial a = new Polynomial(aList);
-        Polynomial b = new Polynomial(bList);
+        Polynomial a = new Polynomial("1,1,1");
+        Polynomial b = new Polynomial("2,-2");
         
-        euclid(a,b,null); //call without using computation
+        euclid(a,b,7,null); //call without using computation
+        
     }
     
-    public static Polynomial euclid(Computation c) {
-        return euclid(c.getX(), c.getY(), c);
+    public static Polynomial euclid(Polynomial a, Polynomial b, int mod) {
+        return euclid(a, b, mod, null);
     }
     
-    public static Polynomial euclid(Polynomial a, Polynomial b, Computation c) {
+    public static Polynomial euclid(Polynomial a, Polynomial b, int mod, Computation c) {
         //Duplicate a and b for output only
         ArrayList<Integer> inputA = new ArrayList<>(a.asArrayList());
         ArrayList<Integer> inputB = new ArrayList<>(b.asArrayList());
         
         //Declare variables
-        Polynomial x = new Polynomial(new LinkedList<>(Arrays.asList(0)));
-        Polynomial y = new Polynomial(new LinkedList<>(Arrays.asList(0)));
-        Polynomial q = new Polynomial(new LinkedList<>(Arrays.asList(0)));
-        Polynomial r = new Polynomial(new LinkedList<>(Arrays.asList(0)));
-        Polynomial x_ = new Polynomial(new LinkedList<>(Arrays.asList(1)));
-        Polynomial y_ = new Polynomial(new LinkedList<>(Arrays.asList(0)));
-        Polynomial u = new Polynomial(new LinkedList<>(Arrays.asList(0)));
-        Polynomial v = new Polynomial(new LinkedList<>(Arrays.asList(1)));
+        Polynomial x = new Polynomial("1");
+        Polynomial y = new Polynomial("0");
+        Polynomial q= new Polynomial("0");;
+        Polynomial r= new Polynomial("0");;
+        Polynomial x_;
+        Polynomial y_;
+        Polynomial u = new Polynomial("0");
+        Polynomial v = new Polynomial("1");
+        Division.QuoRem Q;
         
-        ////////////////TODO switch thang
         //Set this boolean to true if X and Y get swapped, such that a1 and b1 are correct
         Boolean switched = false;
         
         //Make sure x > y
-        if(Arithmetic.isLessThan(a,b)){
+        if(PolyArithmetic.polyIsLessThan(a,b,mod)){
             Polynomial dummy = x.copy();
             x = y.copy();
             y = dummy.copy();
             switched = true;
+            System.out.println("SWITCHED!!!!!!");
         }
         ////////////////////////
         
         //Compute Euclids Algorithm
         while(checkNotZero(b)){
-            q = divide(a,b);
-            r = remainder(a,b);
+            print("X:", x);
+            print("Y:", y);
+            sleep(10);
+            System.out.println("Before divide");
+            print("A:", a);
+            print("B:", b);
+            System.out.println("M: " + mod);
+            Q = Division.divide(a,b,mod);
+            System.out.println("After divide");
+            q = Q.q;
+            r = Q.r;
+            print("q:", q);
+            print("r:", r);
             a = b;
             b = r;
             x_ = x;
             y_ = y;
             x = u;
             y = v;
-            u = subtract(x_, multiply(q, u));
-            v = subtract(y_, multiply(q, v));
+            System.out.println("So far"); 
+            u = PolyArithmetic.polySubtract(x_, PolyMultiplication.polyMultiply(q, u,mod),mod);
+            v = PolyArithmetic.polySubtract(y_, PolyMultiplication.polyMultiply(q, v,mod),mod);
+            System.out.println("So far2");
         }
         
         //Check if x and y were switched
         if(switched){
-            a2 = a1;//TODO change variables?
-            a1 = b1;
-            b1 = a2;
+            x_ = x;//TODO change variables?
+            x = y;
+            y = x_;
         }
         
         //Remove leading zero's
         Arithmetic.removeLeadingZeros(x);
         Arithmetic.removeLeadingZeros(y);
-   
+        
+        
         // set answers in computation instance
-        if (c != null) {
-            c.setAnswA(x);
-            c.setAnswB(y);
-            c.setAnswD(a);
-        }
+//        if (c != null) {
+//            c.setAnswA(x);
+//            c.setAnswB(y);
+//            c.setAnswD(a);
+//        }
         
         // gcd
         return a;
@@ -103,11 +117,12 @@ public class Euclid {
         return !yList.isEmpty();
     }
     
+    
     // print linked list as number
     // eg: "list: 215643"
-    public static void print(String title, LinkedList<Integer> list) {
+    public static void print(String title, Polynomial list) {
         System.out.print(title + ": ");
-        for(int i =0;i <list.size();i++){
+        for(int i =0;i <list.getSize();i++){
             System.out.print(list.get(i));
         }
         System.out.println("");

@@ -75,4 +75,23 @@ public class PolyArithmetic {
         }
         return new Polynomial(ans).removeZeros();
     }
+    
+    public static boolean polyIsLessThan(Polynomial a, Polynomial b, int p){
+        Arithmetic.removeLeadingZeros(a);
+        Arithmetic.removeLeadingZeros(b);
+        if(a.getSize() < b.getSize()){
+            return true;
+        }else if(a.getSize() > b.getSize()){
+            return false;
+        }else{
+            for(int i = 0; i < a.getSize();i++){
+                if(a.get(i) < b.get(i)){
+                    return true;
+                }else if(a.get(i) > b.get(i)){
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
 }
