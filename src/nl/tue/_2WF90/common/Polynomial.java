@@ -195,6 +195,25 @@ public class Polynomial{
             poly.set(index, y);
         }
     }
+
+    /**
+     * Returns whether this poly equals another poly
+     * @param a the other poly we compare to
+     * @return this.poly==a.poly
+     */
+    public boolean equals(Polynomial a) {
+        Iterator<Integer> it = iterator(); Iterator<Integer> itA = a.iterator();
+        if (getDegree()>a.getDegree()) {
+            a.addZeros(getDegree()-a.getDegree());
+        } else {
+            addZeros(a.getDegree()-getDegree());
+        }
+        while (it.hasNext() && itA.hasNext()) {
+            if (it.next()!=itA.next()) return false;
+        }
+        a.removeZeros(); removeZeros();
+        return true;
+    }
     
 
     @Override

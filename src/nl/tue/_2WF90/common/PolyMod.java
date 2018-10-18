@@ -1,4 +1,7 @@
 package nl.tue._2WF90.common;
+
+import java.util.Iterator;
+
 /**
  * Class that implements the polynomial mod operation
  *
@@ -16,20 +19,21 @@ public class PolyMod {
      * @param a Polynomial a
      * @param b Polynomial b
      * @param m Polynomial m
+     * @param p Integer mod
      * @return a(mod m)==b(mod m)
      */
-    public boolean congruentModulo(Polynomial a, Polynomial b, Polynomial m) {
-        return false;
-    }
-
-    /**
-     * Method that returns a(mod m)
-     * @param a Polynomial
-     * @param m Polynomial
-     * @return a(mod m)
-     */
-    public Polynomial polyMod(Polynomial a, Polynomial m) {
-        return new Polynomial("{1,0}");
+    public boolean congruentModulo(Polynomial a, Polynomial b, Polynomial m, int p) {
+        Polynomial aMod = Division.modulo(a, m, p);
+        Polynomial bMod = Division.modulo(b, m, p);
+        Iterator<Integer> ita = aMod.iterator(); Iterator<Integer> itb = bMod.iterator();
+        boolean equal = true;
+        while (ita.hasNext() && itb.hasNext()) {
+            if (ita.next()!=itb.next()) {
+                equal = false;
+                break;
+            }
+        }
+        return equal;
     }
 
 }
