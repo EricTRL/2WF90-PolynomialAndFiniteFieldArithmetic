@@ -22,7 +22,7 @@ public class PolyMod {
      * @param p Integer mod
      * @return a(mod m)==b(mod m)
      */
-    public boolean congruentModulo(Polynomial a, Polynomial b, Polynomial m, int p) {
+    public static boolean congruentModulo(Polynomial a, Polynomial b, Polynomial m, int p) {
         Polynomial aMod = Division.modulo(a, m, p);
         Polynomial bMod = Division.modulo(b, m, p);
         Iterator<Integer> ita = aMod.iterator(); Iterator<Integer> itb = bMod.iterator();

@@ -32,6 +32,7 @@ public class Polynomial{
             this.poly.addFirst(0);
         } else {
             this.poly = poly;
+            this.removeZeros();
         }
     }
     
@@ -217,7 +218,7 @@ public class Polynomial{
     
 
     @Override
-    public String toString() {
+    public String toString() {        
         if (!hasDegree()) {
             return "0";
         }
@@ -274,7 +275,7 @@ public class Polynomial{
      * @return 
      * @post removes all the leading zeros from the polynomial
      */
-    public Polynomial removeZeros() {
+    public final Polynomial removeZeros() {
         while (getLeadingCoefficient() == 0 && hasDegree()) {
             removeLeadingCoefficient();
         }
@@ -289,4 +290,24 @@ public class Polynomial{
         return new Polynomial(poly);
     }
 
+    
+    public boolean isEqual(Polynomial p) {
+        Iterator<Integer> i = this.iterator();
+        Iterator<Integer> j = p.iterator();
+        
+        while(i.hasNext()) {
+            if(j.hasNext()) {
+                if (!i.next().equals(j.next())) {
+                    return false;
+                }
+            } else {
+                //i > j
+                return false;
+            }
+        }
+        
+        //check if i < j
+        return !j.hasNext();
+    }
+    
 }
