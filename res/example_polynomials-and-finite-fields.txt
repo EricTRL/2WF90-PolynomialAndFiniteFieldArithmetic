@@ -230,41 +230,41 @@
 [euclid-poly]
 [f]		{1,1,1}
 [g]		{2,-2}
-[answ-a]:	5
-[answ-b]:	X+2
-[answ-d]:	1
+[answ-a] 	5
+[answ-b] 	X+2
+[answ-d] 	1
 
 [mod]		7
 [euclid-poly]
 [f]		{1,0,1}
 [g]		{1,0,0,1}
-[answ-a]:	3X^2+3X+4
-[answ-b]:	4X+4
-[answ-d]:	1
+[answ-a] 	3X^2+3X+4
+[answ-b] 	4X+4
+[answ-d] 	1
 
 [mod]		2
 [euclid-poly]
 [f]		{1,0,1}
 [g]		{1,0,0,1}
-[answ-a]:	X
-[answ-b]:	1
-[answ-d]:	X+1
+[answ-a] 	X
+[answ-b] 	1
+[answ-d] 	X+1
 
 [mod]		7
 [euclid-poly]
 [f]		{1,1,1}
 [g]		{0}
-[answ-a]:	1
-[answ-b]:	0
-[answ-d]:	X^2+X+1
+[answ-a] 	1
+[answ-b] 	0
+[answ-d] 	X^2+X+1
 
 [mod]		7
 [euclid-poly]
 [f]		{2,2,2}
 [g]		{0}
-[answ-a]:	4
-[answ-b]:	0
-[answ-d]:	X^2+X+1
+[answ-a] 	4
+[answ-b] 	0
+[answ-d] 	X^2+X+1
 
 [mod]		7
 [equals-poly-mod]
@@ -431,20 +431,25 @@
 [mod-poly]	{1,0,0,2}
 [primitive]
 [a]		{1,0}
-[answer]:	FALSE
+[answer] 	FALSE
 
 [mod]		7
 [mod-poly]	{1,0,0,2}
 [primitive]
 [a]		{1,0,1}
-[answer]:	TRUE
+[answer] 	TRUE
 
 [mod]		7
 [mod-poly]	{1,0,6}
 [find-prim]
-[answer]:	2X+6
+[answer] 	ERROR
 
 [mod]		7
-[mod-poly]	{1,0,6}
+[mod-poly]	{1,0,1}
 [find-prim]
-[answer]:	X+2
+[answer] 	2X+6
+
+[mod]		7
+[mod-poly]	{1,0,1}
+[find-prim]
+[answer] 	X+2

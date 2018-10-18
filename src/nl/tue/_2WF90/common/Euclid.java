@@ -98,14 +98,6 @@ public class Euclid {
         Arithmetic.removeLeadingZeros(x);
         Arithmetic.removeLeadingZeros(y);
         
-        
-        // set answers in computation instance
-//        if (c != null) {
-//            c.setAnswA(x);
-//            c.setAnswB(y);
-//            c.setAnswD(a);
-//        }
-        
         // gcd
         return a;
     }
