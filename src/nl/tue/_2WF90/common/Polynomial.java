@@ -309,5 +309,9 @@ public class Polynomial{
         //check if i < j
         return !j.hasNext();
     }
+
+    boolean isZeroPolynomial() {
+        return !hasDegree();
+    }
     
 }
