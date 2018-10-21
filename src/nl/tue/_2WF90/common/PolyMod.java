@@ -26,14 +26,12 @@ public class PolyMod {
         Polynomial aMod = Division.modulo(a, m, p);
         Polynomial bMod = Division.modulo(b, m, p);
         Iterator<Integer> ita = aMod.iterator(); Iterator<Integer> itb = bMod.iterator();
-        boolean equal = true;
         while (ita.hasNext() && itb.hasNext()) {
             if (ita.next()!=itb.next()) {
-                equal = false;
-                break;
+                return false;
             }
         }
-        return equal;
+        return true;
     }
 
 }
