@@ -16,6 +16,8 @@ public class PolyMultiplication {
         Polynomial a = new Polynomial("1,1");
         Polynomial b = new Polynomial("1,-1");
         System.out.println(polyMultiply(a, b, 100000));
+        
+        System.out.println(a + "*" + b);
     }
     /* obsolete, almost certain
     public static LinkedList<Integer> polyMultiply(Computation c) {
@@ -62,7 +64,6 @@ public class PolyMultiplication {
             }
         }
         
-        Arithmetic.removeLeadingZeros(answer);
-        return answer;
+        return answer.removeZeros();
     }
 }

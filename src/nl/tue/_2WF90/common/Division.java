@@ -14,6 +14,23 @@ package nl.tue._2WF90.common;
  * @since 27 SEPTEMBER 2018
  */
 public class Division {
+    
+    public static void main(String args[]) {
+        int mod = 2;
+        Polynomial a = new Polynomial("1,0,0");
+        Polynomial b = new Polynomial("1,1,1");
+        System.out.println(a + "/" + b);
+        System.out.println(divide(a, b, mod));
+        
+        /*
+        for (int i = -mod+1; i < mod; i++) {
+            int inverse = smallNumberModularInversion(i, mod);
+            System.out.println(i + "*" + inverse + " = " + Math.floorMod((i*inverse), mod) + " (mod " + mod + ")");
+        }
+        */
+    }
+    
+    
     /**
      * Calculates x (mod m)
      * @param x polynomial to be reduced
@@ -35,6 +52,11 @@ public class Division {
      * @return q,r such that a = q*b + r
      */
     public static QuoRem divide(Polynomial a, Polynomial b, int p) {
+        if (b.isZeroPolynomial()) {
+            System.err.println("ERROR: Polynomial b cannot be the Zero-polynomial!");
+            return null;
+        }
+        
         Polynomial q = new Polynomial();
         Polynomial r = a.copy();
         
@@ -45,10 +67,39 @@ public class Division {
             //Determine X^(degR-degB)
             Polynomial x = new Polynomial(1, degR - degB);      
             
-            //Calculate lc(r)/lc(b)
-            Polynomial coeff = new Polynomial(r.getLeadingCoefficient()/b.getLeadingCoefficient());
+            //leading coefficients
+            int leadR = r.getLeadingCoefficient();
+            int leadB = b.getLeadingCoefficient();
             
-            q = PolyArithmetic.polyAdd(q, PolyMultiplication.polyMultiply(coeff, x, p), p);
+            //Determine lc(r)/lc(b)
+            int lcrDivlcb;
+            
+            if (Math.floorMod(leadR, leadB) == 0) {
+                //we can divide without needing the inverse
+                lcrDivlcb = leadR/leadB;
+            } else {
+                //we need the inverse to be able to divide (since we can't have
+                //fractions)
+                int leadB_inverse = smallNumberModularInversion(leadB, p);
+                if (leadB_inverse == 0) {
+                    //leadB has no inverse, so we cannot divide further
+                    //this will not happen if p is prime (unless leadB = 0)
+                    break;
+                }
+                //leadB has an inverse
+                lcrDivlcb = Math.floorMod(leadR*leadB_inverse, p);
+                
+                /*
+                This works since:
+                lc(r)/lc(b) = lc(r)/lc(b)*1 (mod p)
+                            = lc(r)/lc(b)*(lc(b)*inverse(lc(b))) (mod p)
+                            = lc(r)*inverse(lc(b)) (mod p)
+                */
+            }
+            
+            Polynomial coeff = new Polynomial(lcrDivlcb);
+            
+            q = PolyArithmetic.polyAdd(q, PolyMultiplication.polyMultiply(coeff, x, p), p); 
             
             r = PolyArithmetic.polySubtract(r, PolyMultiplication.polyMultiply(PolyMultiplication.polyMultiply(coeff, x, p), b, p), p);
             
@@ -73,5 +124,38 @@ public class Division {
         public String toString() {
             return "(" + q + "," + r + ")";
         }
+    }
+    
+    /**
+     * Performs modular inversion on small numbers
+     * @param x Number to find the inverse of
+     * @param m Modulus
+     * @pre Integer.MIN_VALUE <= x <= Integer.MAX_VALUE &&
+     *      Integer.MIN_VALUE <= m <= Integer.MAX_VALUE
+     * @return x^(-1) such that x*(x)^(-1) = 1, or 0 if such x^(-1) does not exist
+     */
+    public static int smallNumberModularInversion(int x, int m) {
+        int x_prime = Math.floorMod(x, m);
+        int m_prime = m;
+        int x1 = 1;
+        int x2 = 0;
+        int x3, q, r;
+        
+        while (m_prime > 0) {
+            q = Math.floorDiv(x_prime, m_prime);
+            r = x_prime - q*m_prime;
+            
+            x_prime = m_prime;
+            m_prime = r;            
+            
+            x3 = Math.floorMod(x1 - q*x2, m);
+            x1 = x2;
+            x2 = x3;
+        }
+        
+        if (x_prime == 1) {
+            return x1;
+        }
+        return 0;
     }
 }

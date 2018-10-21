@@ -29,8 +29,8 @@ public class PolyArithmetic {
      * @return a+b(mod p)
      */
     public static Polynomial polyAdd(Polynomial a, Polynomial b, int p) {
-        Polynomial anew = new Polynomial(a.asArrayList());
-        Polynomial bnew = new Polynomial(b.asArrayList());
+        Polynomial anew = a.copy();
+        Polynomial bnew = b.copy();
         LinkedList<Integer> ans = new LinkedList<>();
         //We add leading zeros to make the addition easier
         if (anew.getDegree()>bnew.getDegree()) {
@@ -56,8 +56,8 @@ public class PolyArithmetic {
      */
     public static Polynomial polySubtract(Polynomial a, Polynomial b, int p) {
         LinkedList<Integer> ans = new LinkedList<>();
-        Polynomial an = new Polynomial(a.asArrayList());
-        Polynomial bn = new Polynomial(b.asArrayList());
+        Polynomial an = a.copy();
+        Polynomial bn = b.copy();
         //Add leading zeros to make subtraction a lot easier
         if (an.getDegree()>bn.getDegree()) {
             bn.addZeros(an.getDegree()-bn.getDegree());
@@ -72,4 +72,22 @@ public class PolyArithmetic {
         return new Polynomial(ans).removeZeros();
     }
 
+    public static boolean polyIsLessThan(Polynomial a, Polynomial b, int p){
+        Arithmetic.removeLeadingZeros(a);
+        Arithmetic.removeLeadingZeros(b);
+        if(a.getSize() < b.getSize()){
+            return true;
+        }else if(a.getSize() > b.getSize()){
+            return false;
+        }else{
+            for(int i = 0; i < a.getSize();i++){
+                if(a.get(i) < b.get(i)){
+                    return true;
+                }else if(a.get(i) > b.get(i)){
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
 }
