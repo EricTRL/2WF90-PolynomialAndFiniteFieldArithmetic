@@ -19,20 +19,24 @@ public class PolyMultiplication {
         
         System.out.println(a + "*" + b);
     }
-    /* obsolete, almost certain
-    public static LinkedList<Integer> polyMultiply(Computation c) {
-        return polyMultiply(c.getX(), c.getY(), c.getRadix(), c);
-    }
-    */
+    
     
     /**
-     * Multiply large numbers in radix b
-     *
-     * @param a Polynomial with coefficients of first polynomial
-     * @param b Polynomial with coefficients of second polynomial
-     * @param p
-     * @pre x.length==y.length
-     * @return x*y in radix b
+     * Polynomial Multiplication (mod p)
+     * @param c
+     * @return c.f * c.g (mod c.mod)
+     */
+    public static Polynomial polyMultiply(Computation c) {
+        return polyMultiply(c.getF(), c.getG(), c.getMod());
+    }     
+    
+    /**
+     * Multiplies two Polynomials a and b
+     * @param a Polynomial
+     * @param b Polynomial
+     * @param p Modulus
+     * @pre a != null && b != null
+     * @return x*y (mod p)
      */
     public static Polynomial polyMultiply(Polynomial a, Polynomial b, int p) {
         int sizeA = a.getSize();

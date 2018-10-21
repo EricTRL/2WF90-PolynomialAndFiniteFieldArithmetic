@@ -252,6 +252,24 @@ public class Polynomial{
     }
     
     /**
+     * Returns a string where the Polynomial is printed the same as in the input
+     * @return 
+     */
+    public String toInputString() {
+        if (isZeroPolynomial()) {
+            return "{}";
+        }
+        
+        StringBuilder s = new StringBuilder("{");
+        for (int i : poly) {
+            s.append(i).append(",");
+        }
+        s.deleteCharAt(s.length() - 1); //remove the last comma
+        s.append("}");
+        return s.toString();
+    }
+    
+    /**
      * Gives the polynomial
      * @return 
      */
@@ -318,4 +336,18 @@ public class Polynomial{
         return !hasDegree();
     }
     
+    /**
+     * 
+     * @param p
+     * @return 
+     */
+    public Polynomial simpleModulo(int p) {
+        LinkedList<Integer> l = new LinkedList<>();
+        for (int i : poly) {
+            l.addLast(Math.floorMod(i, p));
+        }
+        poly.clear();
+        poly.addAll(l);
+        return this;
+    }
 }

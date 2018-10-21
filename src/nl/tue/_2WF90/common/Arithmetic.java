@@ -1,7 +1,10 @@
 package nl.tue._2WF90.common;
 
-import java.util.Arrays;
+import java.io.FileNotFoundException;
 import java.util.LinkedList;
+import java.util.List;
+import nl.tue._2WF90.io.InputReader;
+import nl.tue._2WF90.io.OutputWriter;
 
 /**
  * This is the base class that is run.
@@ -18,33 +21,83 @@ import java.util.LinkedList;
  */
 public class Arithmetic {
     //Main method
-    public static void main(String args[]) {
-        Polynomial poly = new Polynomial(new LinkedList<>(Arrays.asList(99, 0, 1, 5)));
-        System.out.println(poly);
-        System.out.println(new Polynomial("{-9,07,-5,0}"));
-        System.out.println(new Polynomial("{0,1,-5,0}"));
-        System.out.println(new Polynomial("{}"));
-        System.out.println(new Polynomial("{0,0,0,0}"));
+    public static void main(String args[]) throws FileNotFoundException {
+        //expects res/Input.txt to exist
+        //a FileInputStream can also be passed as a parameter instead
+        InputReader reader = new InputReader();
         
-        //System.out.println(divide(new Polynomial("{1,0,0,5,3}"), new Polynomial("{1,0}")));
+        //List of computations to make
+        List<Computation> computations = new LinkedList<>();
         
-        Polynomial a = new Polynomial("1,0,-1");
-        Polynomial b = new Polynomial("1,-1");
-        System.out.println("derp");
-        System.out.println(Division.divide(a, b, 10000000));
-        
-        System.out.println(isPrime(0));
-        System.out.println(isPrime(1));
-        System.out.println(isPrime(2));
-        System.out.println(isPrime(3));
-        System.out.println(isPrime(4));
-        System.out.println(isPrime(5));
-        System.out.println(isPrime(6));
-        System.out.println(isPrime(37));
-        System.out.println(isPrime(49));
-        System.out.println(isPrime(1000000003));
-        
-        
+        //while there are computations to read
+        Computation c;
+        while ((c = reader.getNextComputation()) != null) {
+            //the computation's type (and modulus) signify what to compute
+            if (!isPrime(c.getMod())) {
+                System.err.println("WARNING: Modulus in Computation + " + c + " + is NOT prime. Got mod = " + c.getMod());
+                c.setMsg("ERROR");
+            } else {
+                switch (c.getType()) {
+                    //Polynomial Arithmetic
+                    case "[display-poly]":  c.setAnswer(c.getF().copy().simpleModulo(c.getMod()));
+                                            break;
+                    case "[add-poly]":      c.setAnswer(PolyArithmetic.polyAdd(c));
+                                            break;
+                    case "[subtract-poly]": c.setAnswer(PolyArithmetic.polySubtract(c));
+                                            break;
+                    case "[multiply-poly]": c.setAnswer(PolyMultiplication.polyMultiply(c));
+                                            break;
+                    case "[long-div-poly]": Division.QuoRem answ = Division.divide(c);
+                                            if (answ == null) {
+                                                c.setMsg("ERROR");
+                                                break;
+                                            }
+                                            c.setQuotient(answ.q);
+                                            c.setRemainder(answ.r);
+                                            break;
+                    case "[euclid-poly]":   //TODO
+                                            break;
+                    case "[equals-poly-mod]":   if (c.getH().isZeroPolynomial()) {
+                                                    c.setMsg("ERROR");
+                                                    break;
+                                                }
+                                                c.setMsg(PolyMod.congruentModulo(c) ? "TRUE" : "FALSE");
+                                                break;
+                    case "[irreducible]":   c.setMsg(/*TODO*/true/*TODO*/ ? "TRUE" : "FALSE");
+                                            break;
+                    case "[find-irred]":    //TODO
+                                            break;
+                    //Finite Field Arithmetic
+                    case "[add-table]":     c.setMsg(new FiniteField(c).generateAdditionTable().toString());
+                                            break;      
+                    case "[mult-table]":    c.setMsg(new FiniteField(c).generateMultiplicationTable().toString());
+                                            break; 
+                    case "[display-field]": //TODO
+                                            break;  
+                    case "[add-field]":     //TODO
+                                            break;  
+                    case "[subtract-field]"://TODO
+                                            break;  
+                    case "[multiply-field]"://TODO
+                                            break;  
+                    case "[inverse-field]": //TODO
+                                            break;  
+                    case "[division-field]"://TODO
+                                            break;  
+                    case "[equals-field]":  //TODO
+                                            break;
+                    case "[primitive]":     //TODO
+                                            break;
+                    case "[find-prim]":     //TODO
+                                            break;                        
+                    //Neither Polynomial nor Finite Field Arithmetic
+                    default:            System.err.println("Invalid Computation-Type found: " + c.getType()); break;
+                }
+            }
+            //System.out.println(c.getAnswer()); System.out.println(c.getAnswerAsString());
+            computations.add(c);
+        }
+        OutputWriter.writeOutput(computations); //writes to res/output.txt by default
     }
     
     /**
@@ -65,11 +118,9 @@ public class Arithmetic {
         
         for (int i = 3; i <= Math.sqrt(p); i+=2) {
             if ((p % i) == 0) {
-                System.out.println(p + " is NOT prime; p = " + i + " * " + p/i);
                 return false;
             }
         }
-        System.out.println(p + " is prime");
         return true;
     }
     

@@ -14,6 +14,11 @@ import java.util.Iterator;
  * @since 27 SEPTEMBER 2018
  */
 public class PolyMod {
+        
+    public static boolean congruentModulo(Computation c) {
+        return congruentModulo(c.getF(), c.getG(), c.getH(), c.getMod());
+    }
+    
     /**
      * Method that returns whether a(mod m)=b(mod m)
      * @param a Polynomial a

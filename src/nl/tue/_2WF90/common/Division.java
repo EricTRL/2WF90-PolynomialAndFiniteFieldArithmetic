@@ -36,19 +36,29 @@ public class Division {
      * @param x polynomial to be reduced
      * @param m modulo polynomial
      * @param p prime modulo with p < (bound)
-     * @return x (mod m) in Z/2Z
+     * @return x (mod m) in Z/pZ
      */
     public static Polynomial modulo(Polynomial x, Polynomial m, int p) {
         return divide(x, m, p).r;
     }
     
+    /**
+     * Uses Long Division on c.getF() and c.getG() to find Polynomials q, r such 
+     * that c.getF() = q*c.getG() + r
+     * @param c Computation
+     * @return q,r such that
+     */
+    public static QuoRem divide(Computation c) {
+        return divide(c.getF(), c.getG(), c.getMod());
+    }
     
     /**
-     * Uses Long Division on Polynomials a and b, finding Polynomials q, r such 
+     * Uses Long Division on Polynomials a and b to find Polynomials q, r such 
      * that a = q*b + r
      * @param a Numerator Polynomial
      * @param b Denominator Polynomial
      * @param p Modulo, with p is prime and p < (bound)
+     * @pre a != null && b != null && 0 <= p < (bound)
      * @return q,r such that a = q*b + r
      */
     public static QuoRem divide(Polynomial a, Polynomial b, int p) {

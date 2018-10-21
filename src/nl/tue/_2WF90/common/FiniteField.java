@@ -6,7 +6,8 @@ import java.util.LinkedList;
 import javafx.util.Pair;
 
 /**
- * DESCRIPTION
+ * DataType to store a Finite Field described by Z/pZ[X]/(f),
+ * with 0 <= prime p < (bound) and (f) = an irreducible Polynomial
  * 
  * @author E.M.A. Arts (1004076)
  * @author K. Degeling (1018025)
@@ -36,6 +37,10 @@ public class FiniteField {
     private final Polynomial modPoly;
     private final int mod;
     private final LinkedList<Polynomial> elements;
+    
+    public FiniteField(Computation c) {
+        this(c.getModPoly(), c.getMod());
+    }
     
     public FiniteField(Polynomial modPoly, int mod) {
         this.modPoly = modPoly;

@@ -20,6 +20,15 @@ public class PolyArithmetic {
         Polynomial b = new Polynomial("{0,5,1,-4}");
         System.out.println(polySubtract(a,b,7).toString());
     }
+    
+    /**
+     * Polynomial addition (mod p)
+     * @param c
+     * @return c.f + c.g (mod c.mod)
+     */
+    public static Polynomial polyAdd(Computation c) {
+        return polyAdd(c.getF(), c.getG(), c.getMod());
+    }            
 
     /**
      * Polynomial addition (mod p)
@@ -46,6 +55,15 @@ public class PolyArithmetic {
 
         return new Polynomial(ans).removeZeros();
     }
+    
+    /**
+     * Polynomial Subtraction (mod p)
+     * @param c
+     * @return c.f - c.g (mod c.mod)
+     */
+    public static Polynomial polySubtract(Computation c) {
+        return polySubtract(c.getF(), c.getG(), c.getMod());
+    }   
 
     /**
      * Polynomial subtraction (mod p)
