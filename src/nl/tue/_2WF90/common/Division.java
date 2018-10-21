@@ -16,9 +16,11 @@ package nl.tue._2WF90.common;
 public class Division {
     
     public static void main(String args[]) {
-        int mod = 7;
-        
-        System.out.println(divide(new Polynomial("1,6,1"), new Polynomial("4,6"), mod));
+        int mod = 2;
+        Polynomial a = new Polynomial("1,0,0");
+        Polynomial b = new Polynomial("1,1,1");
+        System.out.println(a + "/" + b);
+        System.out.println(divide(a, b, mod));
         
         /*
         for (int i = -mod+1; i < mod; i++) {
@@ -85,7 +87,7 @@ public class Division {
                     break;
                 }
                 //leadB has an inverse
-                lcrDivlcb = leadR*leadB_inverse;
+                lcrDivlcb = Math.floorMod(leadR*leadB_inverse, p);
                 
                 /*
                 This works since:
@@ -97,7 +99,7 @@ public class Division {
             
             Polynomial coeff = new Polynomial(lcrDivlcb);
             
-            q = PolyArithmetic.polyAdd(q, PolyMultiplication.polyMultiply(coeff, x, p), p);
+            q = PolyArithmetic.polyAdd(q, PolyMultiplication.polyMultiply(coeff, x, p), p); 
             
             r = PolyArithmetic.polySubtract(r, PolyMultiplication.polyMultiply(PolyMultiplication.polyMultiply(coeff, x, p), b, p), p);
             

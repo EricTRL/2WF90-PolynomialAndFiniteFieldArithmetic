@@ -287,10 +287,14 @@ public class Polynomial{
      * @return an exact copy of the polynomial
      */
     public Polynomial copy() {
-        return new Polynomial(poly);
+        return new Polynomial(new LinkedList<>(poly));
     }
 
-    
+    /**
+     * 
+     * @param p
+     * @return 
+     */
     public boolean isEqual(Polynomial p) {
         Iterator<Integer> i = this.iterator();
         Iterator<Integer> j = p.iterator();

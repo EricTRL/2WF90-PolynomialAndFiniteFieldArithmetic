@@ -25,15 +25,8 @@ public class PolyMod {
     public static boolean congruentModulo(Polynomial a, Polynomial b, Polynomial m, int p) {
         Polynomial aMod = Division.modulo(a, m, p);
         Polynomial bMod = Division.modulo(b, m, p);
-        Iterator<Integer> ita = aMod.iterator(); Iterator<Integer> itb = bMod.iterator();
-        boolean equal = true;
-        while (ita.hasNext() && itb.hasNext()) {
-            if (ita.next()!=itb.next()) {
-                equal = false;
-                break;
-            }
-        }
-        return equal;
+        
+        return aMod.isEqual(bMod);
     }
 
 }
