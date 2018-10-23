@@ -15,7 +15,7 @@ public class FiniteFieldArithmetic {
     public static void main(String[] args) {
         Polynomial a = new Polynomial("{-6,3,0,6}");
         Polynomial b = new Polynomial("{0,5,1,-4}");
-        System.out.println(Add(a,b,7).toString());
+        System.out.println(add(a,b,7).toString());
     }
     
     
@@ -25,6 +25,20 @@ public class FiniteFieldArithmetic {
      * @param c
      * @return c.f + c.g (mod c.mod)
      */
+    public static Polynomial polyAdd(Computation c) {
+        return add(c.getF(), c.getG(), c.getH());
+    }
+    
+    /**
+     * Finite Field addition (mod p)
+     * @param a Polynomial a
+     * @param b Polynomial b
+     * @param f Finite Field f
+     * @return a+b(mod f)
+     */
+    public static Polynomial add(Polynomial a, Polynomial b, FiniteField f) {
+        return Division.modulo(PolyArithmetic.polyAdd(a, b, f.getMod()), f.getModPoly(), f.getMod());  
+    }
     
     
 }
