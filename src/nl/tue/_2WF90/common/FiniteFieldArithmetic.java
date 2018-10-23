@@ -13,10 +13,11 @@ public class FiniteFieldArithmetic {
     
     
     public static void main(String[] args) {
-        Polynomial a = new Polynomial("{-6,3,0,6}");
-        Polynomial b = new Polynomial("{0,5,1,-4}");
-        FiniteField f = new FiniteField(new Polynomial("{1,3,0}"), 5);
+        Polynomial a = new Polynomial("{1}");
+        Polynomial b = new Polynomial("{1,0}");
+        FiniteField f = new FiniteField(new Polynomial("{1,1,1}"), 2);
         System.out.println(add(a,b,f).toString());
+        System.out.println(divide(a,b,f).toString());
     }
     
     
@@ -35,11 +36,20 @@ public class FiniteFieldArithmetic {
      * @param a Polynomial a
      * @param b Polynomial b
      * @param f Finite Field f
-     * @return a+b(mod f)
+     * @return a+b(mod f.modPoly, mod f.mod)
      */
     public static Polynomial add(Polynomial a, Polynomial b, FiniteField f) {
         return Division.modulo(PolyArithmetic.polyAdd(a, b, f.getMod()), f.getModPoly(), f.getMod());  
     }
     
-    
+    /**
+     * Finite Field division (mod p)
+     * @param a Polynomial a
+     * @param b Polynomial b
+     * @param f Finite Field f
+     * @return a/b(mod f.modPoly, mod f.mod)
+     */
+    public static Polynomial divide(Polynomial a, Polynomial b, FiniteField f) {
+        return Division.modulo(Division.divide(a, b, f.getMod()).r, f.getModPoly(), f.getMod());  
+    }
 }
