@@ -22,11 +22,11 @@ public class FiniteField {
     
     public static void main(String args[]) {
         Polynomial modPoly = new Polynomial("{1,1,1}");
-        
+
         int mod = 2;
-        
+
         FiniteField f = new FiniteField(modPoly, mod);
-        
+
         OperationTable ot = f.generateMultiplicationTable();
         //ot.toTableForm();
         OperationTable ot2 = f.generateAdditionTable();

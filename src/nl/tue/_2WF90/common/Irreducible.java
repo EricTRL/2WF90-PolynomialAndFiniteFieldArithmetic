@@ -2,7 +2,6 @@ package nl.tue._2WF90.common;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -18,7 +17,7 @@ import java.util.Random;
  */
 public class Irreducible {
     public static void main(String[] args) {
-        testIrreducible(new Polynomial("{5, 2, 1, 0}"), 7);
+        System.out.println(produceIrreducible(4, 2).toString());
     }
 
     /**
@@ -28,15 +27,21 @@ public class Irreducible {
      * @return whether polynomial a is irreducible
      */
     public static boolean testIrreducible(Polynomial a, int p) {
-        int t = 1;
+        Polynomial as = a.copy();
+        int t = 0;
         Polynomial X;
         do {
-            ArrayList<Integer> coeff = new ArrayList<>(7);
-            coeff.add(1,1); coeff.add(5,1); coeff.add(6,0);
+            t++;
+            ArrayList<Integer> coeff = new ArrayList<>();
+            for (int i = 0; i <= (int)Math.pow(p, t); i++) {
+                coeff.add(0);
+            }
+            coeff.set(0, 1); coeff.set(coeff.size()-2, -1);
             X = new Polynomial(coeff);
             System.out.println(X.toString());
-        } while (new Polynomial("{1}").isEqual(X));
-        if (t==a.getDegree()) return true;
+        } while (Euclid.euclid(a, X, p).a.getDegree()==0);
+        System.out.println(t);
+        if (t==as.getDegree()) return true;
         else return false;
     }
 
@@ -51,7 +56,7 @@ public class Irreducible {
         do {
             LinkedList<Integer> coeff = new LinkedList<>();
             coeff.add(1); //Leading coefficient 1 for a monic polynomial of degree n.
-            for (int i = 1; i < n; i++) {
+            for (int i = 1; i <= n; i++) {
                 coeff.add(r.nextInt(p));
             }
             f = new Polynomial(coeff);

@@ -126,7 +126,7 @@ public class Euclid {
         
         @Override
         public String toString() {
-            return "(" + q + "," + r + ")";
+            return "(" + x.toString() + "," + y.toString() + ")";
         }
     }
     
