@@ -13,9 +13,7 @@ public class FiniteFieldArithmetic {
     
     
     public static void main(String[] args) {
-        Polynomial a = new Polynomial("{-6,3,0,6}");
-        Polynomial b = new Polynomial("{0,5,1,-4}");
-        System.out.println(add(a,b,7).toString());
+
     }
     
     
@@ -37,8 +35,23 @@ public class FiniteFieldArithmetic {
      * @return a+b(mod f)
      */
     public static Polynomial add(Polynomial a, Polynomial b, FiniteField f) {
-        return Division.modulo(PolyArithmetic.polyAdd(a, b, f.getMod()), f.getModPoly(), f.getMod());  
+        return Division.modulo(PolyArithmetic.polyAdd(a, b, f.getMod()), f.getModPoly(), f.getMod());
     }
-    
-    
+
+    /**
+     * Finite Field Multiplication (mod p)
+     * @param a Polynomial a
+     * @param b Polynomial b
+     * @param f Finite Field f
+     * @return a*b(mod f)
+     */
+    public static Polynomial multiply(Polynomial a, Polynomial b, FiniteField f) {
+        return Division.modulo(PolyMultiplication.polyMultiply(a, b, f.getMod()), f.getModPoly(), f.getMod());
+    }
+
+    public static Polynomial subtract(Polynomial a, Polynomial b, FiniteField f) {
+        return Division.modulo(PolyArithmetic.polySubtract(a, b, f.getMod()), f.getModPoly(), f.getMod());
+    }
+
+
 }

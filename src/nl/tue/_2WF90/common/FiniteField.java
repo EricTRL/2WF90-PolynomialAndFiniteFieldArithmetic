@@ -146,7 +146,7 @@ public class FiniteField {
             this.operation = (operation.equals("*") ? "*" : "+");
             this.keys = new LinkedList<>(keys);
             this.values = new HashMap<>();
-            
+
             for (Polynomial p : keys) {
                 for (Polynomial q : keys) {
                     Pair<Polynomial, Polynomial> pq = new Pair(p, q);
