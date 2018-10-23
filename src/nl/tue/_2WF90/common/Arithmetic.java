@@ -86,7 +86,10 @@ public class Arithmetic {
                                             break;  
                     case "[multiply-field]": c.setAnswer(FiniteFieldArithmetic.multiply(c.getA(), c.getB(), new FiniteField(c)));
                                             break;  
-                    case "[inverse-field]": //TODO
+                    case "[inverse-field]": c.setAnswer(FiniteFieldArithmetic.inverseField(c.getA(), new FiniteField(c)));
+                                            if (c.getAnswer() == null) {
+                                                c.setMsg("ERROR");
+                                            }
                                             break;  
                     case "[division-field]": c.setAnswer(FiniteFieldArithmetic.divide(c.getA(), c.getB(), new FiniteField(c)));
                                             if (c.getAnswer() == null) {
