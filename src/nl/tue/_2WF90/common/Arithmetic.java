@@ -55,7 +55,10 @@ public class Arithmetic {
                                             c.setQuotient(answ.q);
                                             c.setRemainder(answ.r);
                                             break;
-                    case "[euclid-poly]":   //TODO
+                    case "[euclid-poly]":   Euclid.Euclidean eu = Euclid.euclid(c);
+                                            c.setGCD(eu.gcd);
+                                            c.setAnswA(eu.a);
+                                            c.setAnswB(eu.b);
                                             break;
                     case "[equals-poly-mod]":   if (c.getH().isZeroPolynomial()) {
                                                     c.setMsg("ERROR");
