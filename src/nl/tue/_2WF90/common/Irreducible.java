@@ -35,7 +35,7 @@ public class Irreducible {
             coeff.add(1,1); coeff.add(5,1); coeff.add(6,0);
             X = new Polynomial(coeff);
             System.out.println(X.toString());
-        } while (new Polynomial("{1}").equals(X));
+        } while (new Polynomial("{1}").isEqual(X));
         if (t==a.getDegree()) return true;
         else return false;
     }

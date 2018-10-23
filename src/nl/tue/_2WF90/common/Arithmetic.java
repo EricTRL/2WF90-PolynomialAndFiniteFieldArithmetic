@@ -63,9 +63,9 @@ public class Arithmetic {
                                                 }
                                                 c.setMsg(PolyMod.congruentModulo(c) ? "TRUE" : "FALSE");
                                                 break;
-                    case "[irreducible]":   c.setMsg(/*TODO*/true/*TODO*/ ? "TRUE" : "FALSE");
+                    case "[irreducible]":   //c.setMsg(Irreducible.testIrreducible(c.getF(), c.getMod()) ? "TRUE" : "FALSE");
                                             break;
-                    case "[find-irred]":    //TODO
+                    case "[find-irred]":    //c.setAnswer(Irreducible.produceIrreducible(c.getDeg(), c.getMod()));
                                             break;
                     //Finite Field Arithmetic
                     case "[add-table]":     c.setMsg(new FiniteField(c).generateAdditionTable().toString());
