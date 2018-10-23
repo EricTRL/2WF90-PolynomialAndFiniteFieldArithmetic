@@ -98,9 +98,9 @@ public class Arithmetic {
                                             break;  
                     case "[equals-field]":  c.setMsg(FiniteFieldArithmetic.congruentField(c.getA(), c.getB(), new FiniteField(c)) ? "TRUE" : "FALSE");
                                             break;
-                    case "[primitive]":     //TODO
+                    case "[primitive]":     c.setMsg(FiniteFieldArithmetic.testPrimitive(c.getF(), new FiniteField(c)) ? "TRUE" : "FALSE");
                                             break;
-                    case "[find-prim]":     //TODO
+                    case "[find-prim]":     c.setAnswer(FiniteFieldArithmetic.findPrimitive(new FiniteField(c)));
                                             break;                        
                     //Neither Polynomial nor Finite Field Arithmetic
                     default:            System.err.println("Invalid Computation-Type found: " + c.getType()); break;

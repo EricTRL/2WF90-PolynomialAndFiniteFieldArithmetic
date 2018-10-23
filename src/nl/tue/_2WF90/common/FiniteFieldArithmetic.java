@@ -1,23 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package nl.tue._2WF90.common;
 
-import jdk.jfr.events.ExceptionThrownEvent;
-
 /**
- *
- * @author s165318
+ * DESCRIPTION
+ * 
+ * @author E.M.A. Arts (1004076)
+ * @author K. Degeling (1018025)
+ * @author R.M. Jonker (1011291)
+ * @author S. Jacobs (1005276)
+ * @author M. Schotsman (0995661)
+ * 
+ * @since 23 OCTOBER 2018
  */
 public class FiniteFieldArithmetic {
-    
-    
-    public static void main(String[] args) {
-    }
-    
-    
     
     /**
      * Finite Field addition (mod p)
@@ -133,7 +127,24 @@ public class FiniteFieldArithmetic {
         return (gcd.getDegree()==0) ? x : null;
     }
 
-    public static boolean testPrimitve(Polynomial a, FiniteField f) throws Exception {
-        throw new IndexOutOfBoundsException();
+    /**
+     * 
+     * @param a
+     * @param f
+     * @return 
+     */
+    public static boolean testPrimitive(Polynomial a, FiniteField f) {
+        return true;
     }
+    
+    /**
+     * 
+     * @param f
+     * @return 
+     */
+    public static Polynomial findPrimitive(FiniteField f) {
+        return null;
+    }
+    
+    
 }
