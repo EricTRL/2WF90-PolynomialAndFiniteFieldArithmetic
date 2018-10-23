@@ -24,16 +24,18 @@ public class Euclid {
         Polynomial a = new Polynomial("2,-2");
         Polynomial b = new Polynomial("1,1,1");
         
-        euclid(a,b,7,null); //call without using computation
+        euclid(a,b,7); //call without using computation
         
+    }
+
+    public static Euclidean euclid(Computation c) {
+        return euclid(c.getF(), c.getG(), c.getMod());
     }
     
     public static Euclidean euclid(Polynomial a, Polynomial b, int mod) {
-        return euclid(a, b, mod, null);
-    }
-    
-    public static Euclidean euclid(Polynomial a, Polynomial b, int mod, Computation c) {
-        //Duplicate a and b for output only
+
+
+        //Duplicate gcd and b for output only
         ArrayList<Integer> inputA = new ArrayList<>(a.asArrayList());
         ArrayList<Integer> inputB = new ArrayList<>(b.asArrayList());
         
@@ -52,28 +54,19 @@ public class Euclid {
         Boolean switched = false;
         
         //Make sure x > y
-        if(PolyArithmetic.polyIsLessThan(a,b,mod)){
+        if(a.isLessThan(b)){
             Polynomial dummy = a.copy();
             a = b.copy();
             b = dummy.copy();
             switched = true;
-            System.out.println("SWITCHED!!!!!!");
         }
         ////////////////////////
         
         //Compute Euclids Algorithm
         while(checkNotZero(b)){
-            print("X:", x);
-            print("Y:", y);
-            System.out.println("Before divide");
-            print("A:", a);
-            print("B:", b);
-            System.out.println("M: " + mod);
             Q = Division.divide(a,b,mod);
             q = Q.q;
             r = Q.r;
-            print("q:", q);
-            print("r:", r);
             a = b;
             b = r;
             x_ = x;
@@ -101,32 +94,26 @@ public class Euclid {
         if(a.getLeadingCoefficient() != 0){
             int a_inverse = smallNumberModularInversion(a.getLeadingCoefficient(),mod);
             Polynomial inverse = new Polynomial(a_inverse);
-            System.out.println("Inverse " + inverse);
             a = PolyMultiplication.polyMultiply(a,inverse,mod);
             x = PolyMultiplication.polyMultiply(x,inverse,mod);
             y = PolyMultiplication.polyMultiply(y,inverse,mod);
         }
-        
-        print("X", x);
-        print("Y", y);
-        print("A", a);
-        
-        
+
         // gcd
         return new Euclidean(x,y,a);
     }
     
     public static class Euclidean {
-        public Polynomial x;
-        public Polynomial y;
         public Polynomial a;
-        public Euclidean(Polynomial x, Polynomial y, Polynomial a) {
-            this.x = x; this.y = y; this.a = a;
+        public Polynomial b;
+        public Polynomial gcd;
+        public Euclidean(Polynomial a, Polynomial b, Polynomial gcd) {
+            this.a = a; this.b = b; this.gcd = gcd;
         }
         
         @Override
         public String toString() {
-            return "(" + x.toString() + "," + y.toString() + ")";
+            return "(" + a + "," + b + "," + gcd + ")";
         }
     }
     

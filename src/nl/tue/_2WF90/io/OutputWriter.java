@@ -128,7 +128,7 @@ public class OutputWriter {
         String type = c.getType();
         
         if (OUTPUT_FOR_CALCULATION.get("mod-poly").contains(type)) {
-            fileWriter.write("[mod-poly] " + c.getModPoly()); fileWriter.newLine();
+            fileWriter.write("[mod-poly] " + c.getModPoly().toInputString()); fileWriter.newLine();
         }
           
         //always output [type]
