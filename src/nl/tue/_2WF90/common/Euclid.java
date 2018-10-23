@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import static nl.tue._2WF90.common.Division.smallNumberModularInversion;
 
 /**
  * @author E.M.A. Arts (1004076)
@@ -20,18 +21,18 @@ public class Euclid {
     
     public static void main(String[] args) {
         
-        Polynomial a = new Polynomial("1,1,1");
-        Polynomial b = new Polynomial("2,-2");
+        Polynomial a = new Polynomial("2,-2");
+        Polynomial b = new Polynomial("1,1,1");
         
         euclid(a,b,7,null); //call without using computation
         
     }
     
-    public static Polynomial euclid(Polynomial a, Polynomial b, int mod) {
+    public static Euclidean euclid(Polynomial a, Polynomial b, int mod) {
         return euclid(a, b, mod, null);
     }
     
-    public static Polynomial euclid(Polynomial a, Polynomial b, int mod, Computation c) {
+    public static Euclidean euclid(Polynomial a, Polynomial b, int mod, Computation c) {
         //Duplicate a and b for output only
         ArrayList<Integer> inputA = new ArrayList<>(a.asArrayList());
         ArrayList<Integer> inputB = new ArrayList<>(b.asArrayList());
@@ -52,9 +53,9 @@ public class Euclid {
         
         //Make sure x > y
         if(PolyArithmetic.polyIsLessThan(a,b,mod)){
-            Polynomial dummy = x.copy();
-            x = y.copy();
-            y = dummy.copy();
+            Polynomial dummy = a.copy();
+            a = b.copy();
+            b = dummy.copy();
             switched = true;
             System.out.println("SWITCHED!!!!!!");
         }
@@ -64,13 +65,11 @@ public class Euclid {
         while(checkNotZero(b)){
             print("X:", x);
             print("Y:", y);
-            sleep(10);
             System.out.println("Before divide");
             print("A:", a);
             print("B:", b);
             System.out.println("M: " + mod);
             Q = Division.divide(a,b,mod);
-            System.out.println("After divide");
             q = Q.q;
             r = Q.r;
             print("q:", q);
@@ -80,11 +79,9 @@ public class Euclid {
             x_ = x;
             y_ = y;
             x = u;
-            y = v;
-            System.out.println("So far"); 
+            y = v; 
             u = PolyArithmetic.polySubtract(x_, PolyMultiplication.polyMultiply(q, u,mod),mod);
             v = PolyArithmetic.polySubtract(y_, PolyMultiplication.polyMultiply(q, v,mod),mod);
-            System.out.println("So far2");
         }
         
         //Check if x and y were switched
@@ -94,19 +91,54 @@ public class Euclid {
             y = x_;
         }
         
+        
+        
         //Remove leading zero's
         Arithmetic.removeLeadingZeros(x);
         Arithmetic.removeLeadingZeros(y);
+        Arithmetic.removeLeadingZeros(a);
+        
+        if(a.getLeadingCoefficient() != 0){
+            int a_inverse = smallNumberModularInversion(a.getLeadingCoefficient(),mod);
+            Polynomial inverse = new Polynomial(a_inverse);
+            System.out.println("Inverse " + inverse);
+            a = PolyMultiplication.polyMultiply(a,inverse,mod);
+            x = PolyMultiplication.polyMultiply(x,inverse,mod);
+            y = PolyMultiplication.polyMultiply(y,inverse,mod);
+        }
+        
+        print("X", x);
+        print("Y", y);
+        print("A", a);
+        
         
         // gcd
-        return a;
+        return new Euclidean(x,y,a);
+    }
+    
+    public static class Euclidean {
+        public Polynomial x;
+        public Polynomial y;
+        public Polynomial a;
+        public Euclidean(Polynomial x, Polynomial y, Polynomial a) {
+            this.x = x; this.y = y; this.a = a;
+        }
+        
+        @Override
+        public String toString() {
+            return "(" + q + "," + r + ")";
+        }
     }
     
     //Check if LinkedList is not zero
     public static boolean checkNotZero(Polynomial y){
         Arithmetic.removeLeadingZeros(y);
         List<Integer> yList = y.asArrayList();
-        return !yList.isEmpty();
+        if(yList.size() == 1 && yList.get(0)==0){
+            return false;
+        }else{
+            return true;
+        }
     }
     
     
