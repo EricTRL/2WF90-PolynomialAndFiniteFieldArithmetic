@@ -36,6 +36,9 @@ public class Arithmetic {
             if (!isPrime(c.getMod())) {
                 System.err.println("WARNING: Modulus in Computation + " + c + " + is NOT prime. Got mod = " + c.getMod());
                 c.setMsg("ERROR");
+            } else if (c.isFiniteFieldArithmetic() && c.getModPoly().isZeroPolynomial()) {
+                System.err.println("WARNING: ModPoly in Computation + " + c + " + cannot be the Zero-polynomial!");
+                c.setMsg("ERROR");
             } else {
                 switch (c.getType()) {
                     //Polynomial Arithmetic
@@ -66,9 +69,9 @@ public class Arithmetic {
                                                 }
                                                 c.setMsg(PolyMod.congruentModulo(c) ? "TRUE" : "FALSE");
                                                 break;
-                    case "[irreducible]":   //c.setMsg(Irreducible.testIrreducible(c.getF(), c.getMod()) ? "TRUE" : "FALSE");
+                    case "[irreducible]":   c.setMsg(Irreducible.testIrreducible(c.getF(), c.getMod()) ? "TRUE" : "FALSE");
                                             break;
-                    case "[find-irred]":    //c.setAnswer(Irreducible.produceIrreducible(c.getDeg(), c.getMod()));
+                    case "[find-irred]":    c.setAnswer(Irreducible.produceIrreducible(c.getDeg(), c.getMod()));
                                             break;
                     //Finite Field Arithmetic
                     case "[add-table]":     c.setMsg(new FiniteField(c).generateAdditionTable().toString());
@@ -90,7 +93,7 @@ public class Arithmetic {
                                                 c.setMsg("ERROR");
                                             }
                                             break;  
-                    case "[equals-field]":  //TODO
+                    case "[equals-field]":  c.setMsg(FiniteFieldArithmetic.congruentField(c.getA(), c.getB(), new FiniteField(c)) ? "TRUE" : "FALSE");
                                             break;
                     case "[primitive]":     //TODO
                                             break;
