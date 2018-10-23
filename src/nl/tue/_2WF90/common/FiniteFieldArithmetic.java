@@ -5,6 +5,8 @@
  */
 package nl.tue._2WF90.common;
 
+import jdk.jfr.events.ExceptionThrownEvent;
+
 /**
  *
  * @author s165318
@@ -129,5 +131,9 @@ public class FiniteFieldArithmetic {
         Polynomial gcd = e.gcd;
         Polynomial x = e.a; Polynomial y = e.b;
         return (gcd.getDegree()==0) ? x : null;
+    }
+
+    public static boolean testPrimitve(Polynomial a, FiniteField f) throws Exception {
+        throw new IndexOutOfBoundsException();
     }
 }
