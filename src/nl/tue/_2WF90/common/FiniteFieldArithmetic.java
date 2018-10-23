@@ -112,4 +112,16 @@ public class FiniteFieldArithmetic {
     public static boolean congruentField(Polynomial a, Polynomial b, FiniteField f) {
         return PolyMod.congruentModulo(a, b, f.getModPoly(), f.getMod());
     }
+    
+    
+    /**
+     * Displays a Finite Field element
+     * @param a Polynomial a
+     * @param f Finite Field f
+     * @return a displayed as an element of f
+     */
+    public static Polynomial displayFieldElement(Polynomial a, FiniteField f) {
+        return Division.divide(a, f.getModPoly(), f.getMod()).r;
+    }   
+    
 }
