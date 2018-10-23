@@ -38,9 +38,9 @@ public class Irreducible {
             }
             coeff.set(0, 1); coeff.set(coeff.size()-2, -1);
             X = new Polynomial(coeff);
-            System.out.println(X.toString());
-        } while (Euclid.euclid(a, X, p).a.getDegree()==0);
-        System.out.println(t);
+            
+        } while (Euclid.euclid(a, X, p).gcd.getDegree()==0);
+        
         if (t==as.getDegree()) return true;
         else return false;
     }
