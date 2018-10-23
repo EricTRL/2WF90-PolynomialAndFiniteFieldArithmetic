@@ -101,4 +101,15 @@ public class FiniteFieldArithmetic {
         }
         return Division.modulo(Division.divide(aa, b, f.getMod()).q, f.getModPoly(), f.getMod());  
     }
+    
+    /**
+     * Finite Field equality check (mod p)
+     * @param a Polynomial a
+     * @param b Polynomial b
+     * @param f Finite Field f
+     * @return a(mod m)==b(mod m)
+     */
+    public static boolean congruentField(Polynomial a, Polynomial b, FiniteField f) {
+        return PolyMod.congruentModulo(a, b, f.getModPoly(), f.getMod());
+    }
 }
