@@ -146,7 +146,7 @@ public class FiniteField {
             this.operation = (operation.equals("*") ? "*" : "+");
             this.keys = new LinkedList<>(keys);
             this.values = new HashMap<>();
-            
+
             for (Polynomial p : keys) {
                 for (Polynomial q : keys) {
                     Pair<Polynomial, Polynomial> pq = new Pair(p, q);
@@ -193,10 +193,20 @@ public class FiniteField {
         
         @Override
         public String toString() {
-            for (Pair<Polynomial, Polynomial> ab : values.keySet()) {
-                //System.out.println("(" + ab.getKey() + ") " + operation + " (" + ab.getValue() + ") = " + values.get(ab));
+            StringBuilder s = new StringBuilder("{");
+            for (Polynomial p : keys) {
+                for (Polynomial q : keys) {
+                    s.append(get(p, q));
+                    if (!q.equals(keys.getLast())) {
+                        s.append(", ");
+                    }
+                }
+                if (!p.isEqual(keys.getLast())) {
+                    s.append("; ");
+                }
             }
-            return "";
+            s.append("}");
+            return s.toString();
         }
         
         /**
