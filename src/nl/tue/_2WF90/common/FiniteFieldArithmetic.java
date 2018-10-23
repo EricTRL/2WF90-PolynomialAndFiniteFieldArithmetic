@@ -13,11 +13,6 @@ public class FiniteFieldArithmetic {
     
     
     public static void main(String[] args) {
-        Polynomial a = new Polynomial("{1}");
-        Polynomial b = new Polynomial("{1,0}");
-        FiniteField f = new FiniteField(new Polynomial("{1,1,1}"), 2);
-        System.out.println(add(a,b,f).toString());
-        System.out.println(divide(a,b,f).toString());
     }
     
     
@@ -120,6 +115,9 @@ public class FiniteFieldArithmetic {
      * @return a^(-1) if it exists, otherwise -1 if it doesn't exist
      */
     public static Polynomial inverseField(Polynomial a, FiniteField f) {
-        return null;
+        Euclid.Euclidean e = Euclid.euclid(a, f.getModPoly(), f.getMod());
+        Polynomial gcd = e.gcd;
+        Polynomial x = e.a; Polynomial y = e.b;
+        return (gcd.getDegree()==0) ? x : null;
     }
 }
