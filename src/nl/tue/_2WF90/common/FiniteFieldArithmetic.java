@@ -1,5 +1,8 @@
 package nl.tue._2WF90.common;
 
+import java.util.LinkedList;
+import java.util.Random;
+
 /**
  * DESCRIPTION
  * 
@@ -143,7 +146,14 @@ public class FiniteFieldArithmetic {
      * @return 
      */
     public static Polynomial findPrimitive(FiniteField f) {
-        return null;
+        Random r = new Random();
+        LinkedList<Polynomial> elem = f.getElements();
+        Polynomial randomPol = elem.get(r.nextInt(elem.size()));
+        do {
+            randomPol = elem.get(r.nextInt(elem.size()));
+        } while (!testPrimitive(randomPol, f));
+        
+        return randomPol;
     }
     
     
