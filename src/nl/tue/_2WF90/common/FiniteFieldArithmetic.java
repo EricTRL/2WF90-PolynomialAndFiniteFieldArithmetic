@@ -111,8 +111,7 @@ public class FiniteFieldArithmetic {
      */
     public static boolean congruentField(Polynomial a, Polynomial b, FiniteField f) {
         return PolyMod.congruentModulo(a, b, f.getModPoly(), f.getMod());
-    }
-    
+    }    
     
     /**
      * Displays a Finite Field element
@@ -123,5 +122,14 @@ public class FiniteFieldArithmetic {
     public static Polynomial displayFieldElement(Polynomial a, FiniteField f) {
         return Division.divide(a, f.getModPoly(), f.getMod()).r;
     }   
-    
+
+    /**
+     * Finds the inverse of a in the field f, if it exists
+     * @param a Polynomial a
+     * @param f Finite Field f
+     * @return a^(-1) if it exists, otherwise -1 if it doesn't exist
+     */
+    public static Polynomial inverseField(Polynomial a, FiniteField f) {
+        return null;
+    }
 }
