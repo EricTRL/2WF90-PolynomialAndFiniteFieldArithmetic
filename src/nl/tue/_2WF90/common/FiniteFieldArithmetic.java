@@ -43,17 +43,6 @@ public class FiniteFieldArithmetic {
     }
     
     /**
-     * Finite Field division (mod p)
-     * @param a Polynomial a
-     * @param b Polynomial b
-     * @param f Finite Field f
-     * @return a/b(mod f.modPoly, mod f.mod)
-     */
-    public static Polynomial divide(Polynomial a, Polynomial b, FiniteField f) {
-        return Division.modulo(Division.divide(a, b, f.getMod()).r, f.getModPoly(), f.getMod());  
-    }
-    
-    /**
      * Finite Field subtraction (mod p)
      * @param c
      * @return c.f - c.g (mod c.mod)
@@ -91,5 +80,25 @@ public class FiniteFieldArithmetic {
      */
     public static Polynomial multiply(Polynomial a, Polynomial b, FiniteField f) {
         return Division.modulo(PolyMultiplication.polyMultiply(a, b, f.getMod()), f.getModPoly(), f.getMod());
+    }
+    
+    
+    /**
+     * Finite Field division (mod p)
+     * @param a Polynomial a
+     * @param b Polynomial b
+     * @param f Finite Field f
+     * @return a/b(mod f.modPoly, mod f.mod)
+     */
+    public static Polynomial divide(Polynomial a, Polynomial b, FiniteField f) {
+        if (b.isZeroPolynomial()) {
+            System.err.println("ERROR: Polynomial b cannot be the Zero-polynomial!");
+            return null;
+        }
+        Polynomial aa = a.copy();
+        while (aa.isLessThan(b)) {
+            aa = PolyArithmetic.polyAdd(aa, f.getModPoly(), f.getMod());
+        }
+        return Division.modulo(Division.divide(aa, b, f.getMod()).q, f.getModPoly(), f.getMod());  
     }
 }

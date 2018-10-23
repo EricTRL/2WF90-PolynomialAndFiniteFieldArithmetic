@@ -311,6 +311,60 @@ public class Polynomial{
         //check if i < j
         return !j.hasNext();
     }
+    
+    /**
+     * 
+     * @param p
+     * @return 
+     */
+    public boolean isLessThan(Polynomial p) {
+        if (this.getDegree() > p.getDegree()) {
+            return false;
+        } else if(this.getDegree() < p.getDegree()) {
+            return true;
+        } //else degree are equal
+        
+        Iterator<Integer> i = this.iterator();
+        Iterator<Integer> j = p.iterator();
+        
+        while(i.hasNext() && j.hasNext()) {
+            int ii = i.next(); int jj = j.next();
+            if (ii > jj) {
+                return false;
+            } else if (ii < jj) {
+                return true;
+            }
+        }
+        //p == this.poly
+        return false;
+    }
+    
+    /**
+     * 
+     * @param p
+     * @return 
+     */
+    public boolean isGreaterThan(Polynomial p) {
+        if (this.getDegree() < p.getDegree()) {
+            return false;
+        } else if(this.getDegree() > p.getDegree()) {
+            return true;
+        } //else degree are equal
+        
+        Iterator<Integer> i = this.iterator();
+        Iterator<Integer> j = p.iterator();
+        
+        while(i.hasNext() && j.hasNext()) {
+            int ii = i.next(); int jj = j.next();
+            if (ii < jj) {
+                return false;
+            } else if (ii > jj) {
+                return true;
+            }
+        }
+        //p == this.poly
+        return false;
+    }
 
     boolean isZeroPolynomial() {
         return !hasDegree();

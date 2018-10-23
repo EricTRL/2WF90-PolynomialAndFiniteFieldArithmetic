@@ -52,7 +52,7 @@ public class Euclid {
         Boolean switched = false;
         
         //Make sure x > y
-        if(PolyArithmetic.polyIsLessThan(a,b,mod)){
+        if(a.isLessThan(b)){
             Polynomial dummy = a.copy();
             a = b.copy();
             b = dummy.copy();
@@ -126,7 +126,7 @@ public class Euclid {
         
         @Override
         public String toString() {
-            return "(" + q + "," + r + ")";
+            return "(" + x + "," + y + "," + a + ")";
         }
     }
     

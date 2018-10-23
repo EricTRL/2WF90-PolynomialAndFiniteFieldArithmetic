@@ -74,15 +74,18 @@ public class Arithmetic {
                                             break; 
                     case "[display-field]": //TODO
                                             break;  
-                    case "[add-field]":     //TODO
+                    case "[add-field]":     c.setAnswer(FiniteFieldArithmetic.add(c.getA(), c.getB(), new FiniteField(c)));
                                             break;  
-                    case "[subtract-field]"://TODO
+                    case "[subtract-field]": c.setAnswer(FiniteFieldArithmetic.subtract(c.getA(), c.getB(), new FiniteField(c)));
                                             break;  
-                    case "[multiply-field]"://TODO
+                    case "[multiply-field]": c.setAnswer(FiniteFieldArithmetic.multiply(c.getA(), c.getB(), new FiniteField(c)));
                                             break;  
                     case "[inverse-field]": //TODO
                                             break;  
-                    case "[division-field]"://TODO
+                    case "[division-field]": c.setAnswer(FiniteFieldArithmetic.divide(c.getA(), c.getB(), new FiniteField(c)));
+                                            if (c.getAnswer() == null) {
+                                                c.setMsg("ERROR");
+                                            }
                                             break;  
                     case "[equals-field]":  //TODO
                                             break;
