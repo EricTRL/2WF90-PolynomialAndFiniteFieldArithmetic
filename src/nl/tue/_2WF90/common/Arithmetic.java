@@ -78,7 +78,7 @@ public class Arithmetic {
                                             break;      
                     case "[mult-table]":    c.setMsg(new FiniteField(c).generateMultiplicationTable().toString());
                                             break; 
-                    case "[display-field]": //TODO
+                    case "[display-field]": c.setAnswer(FiniteFieldArithmetic.displayFieldElement(c.getA(), new FiniteField(c)));
                                             break;  
                     case "[add-field]":     c.setAnswer(FiniteFieldArithmetic.add(c.getA(), c.getB(), new FiniteField(c)));
                                             break;  
@@ -103,7 +103,6 @@ public class Arithmetic {
                     default:            System.err.println("Invalid Computation-Type found: " + c.getType()); break;
                 }
             }
-            //System.out.println(c.getAnswer()); System.out.println(c.getAnswerAsString());
             computations.add(c);
         }
         OutputWriter.writeOutput(computations); //writes to res/output.txt by default
