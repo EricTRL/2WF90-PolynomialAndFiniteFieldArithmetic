@@ -1,6 +1,7 @@
 package nl.tue._2WF90.common;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import nl.tue._2WF90.io.InputReader;
@@ -98,7 +99,8 @@ public class Arithmetic {
                                             break;  
                     case "[equals-field]":  c.setMsg(FiniteFieldArithmetic.congruentField(c.getA(), c.getB(), new FiniteField(c)) ? "TRUE" : "FALSE");
                                             break;
-                    case "[primitive]":     c.setMsg(FiniteFieldArithmetic.testPrimitive(c.getF(), new FiniteField(c)) ? "TRUE" : "FALSE");
+                    case "[primitive]":     System.out.println(c.getA());
+                        c.setMsg(FiniteFieldArithmetic.isPrimitive(c.getA(), new FiniteField(c)) ? "TRUE" : "FALSE");
                                             break;
                     case "[find-prim]":     c.setAnswer(FiniteFieldArithmetic.findPrimitive(new FiniteField(c)));
                                             break;                        
@@ -133,6 +135,33 @@ public class Arithmetic {
             }
         }
         return true;
+    }
+    
+    /**
+     * Inefficient Algorithm to compute the prime divisors of a given number
+     * @param i
+     * @pre i >= 2
+     * @return 
+     */
+    public static ArrayList<Integer> getPrimeDivisors(int i) {
+        if (i <= 1) {
+            return null;
+        }
+        
+        ArrayList<Integer> l = new ArrayList<>();
+        if ((i & 1) == 0) {
+            //divisible by 2
+            l.add(2);
+        }
+        
+        
+        for (int j = 3; j <= i; j+=2) {
+            if ((i % j) == 0 && isPrime(j)) {
+                //j divides i and j is prime
+                l.add(j);
+            }
+        }
+        return l;
     }
     
     /**

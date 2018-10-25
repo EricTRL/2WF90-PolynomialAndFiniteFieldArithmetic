@@ -1,5 +1,6 @@
 package nl.tue._2WF90.common;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -16,12 +17,43 @@ import java.util.Random;
  */
 public class FiniteFieldArithmetic {
     
+    public static void main(String[] args) {
+        FiniteField f = new FiniteField(new Polynomial("1,0,1,1"), 2);
+        System.out.println(f);
+        
+        for (Polynomial p : f.getElements()) {
+            Polynomial q = new Polynomial(1);
+            for (int i = 1; i < 8; i++) {
+                q = multiply(q, p, f);
+                System.out.print("q^"+ (i) +"= ");
+                System.out.println(q);
+            }
+            System.out.println("---------");
+            
+        }
+        
+        Polynomial a = new Polynomial("{-6,3,0,6}");
+        Polynomial b = new Polynomial("{0,5,1,-4}");
+        //System.out.println(polySubtract(a,b,7).toString());
+        
+        
+        System.out.println(powerize(new Polynomial("1,0"), f, 10));
+        
+        for (Polynomial p : f.getElements()) {
+            System.out.println(isPrimitive(p, f));
+        }
+        Polynomial qq = new Polynomial("2,0");
+        
+        
+    }
+    
+    
     /**
      * Finite Field addition (mod p)
      * @param c
      * @return c.f + c.g (mod c.mod)
      */
-    public static Polynomial polyAdd(Computation c) {
+    public static Polynomial add(Computation c) {
         return add(c.getF(), c.getG(), new FiniteField(c));
     }
     
@@ -74,6 +106,21 @@ public class FiniteFieldArithmetic {
      */
     public static Polynomial multiply(Polynomial a, Polynomial b, FiniteField f) {
         return Division.modulo(PolyMultiplication.polyMultiply(a, b, f.getMod()), f.getModPoly(), f.getMod());
+    }
+    
+    /**
+     * 
+     * @param a
+     * @param f
+     * @param exponent
+     * @return 
+     */
+    public static Polynomial powerize(Polynomial a, FiniteField f, int exponent) {
+        Polynomial q = new Polynomial(1);
+        for (int i = 0; i < exponent; i++) {
+            q = multiply(q, a, f);
+        }
+        return q;
     }
     
     
@@ -136,8 +183,22 @@ public class FiniteFieldArithmetic {
      * @param f
      * @return 
      */
-    public static boolean testPrimitive(Polynomial a, FiniteField f) {
-        return true;
+    public static boolean isPrimitive(Polynomial a, FiniteField f) {  
+        Polynomial b = displayFieldElement(a.copy(), f);
+        if (b.isZeroPolynomial()) {
+            return false;
+        }
+        
+        int i = 1;
+        int q = f.getOrder();
+        ArrayList<Integer> primeDivisors = Arithmetic.getPrimeDivisors(q - 1);
+        int k = primeDivisors.size();
+        
+        while (i <= k &&
+                !congruentField(powerize(b, f, (q-1)/primeDivisors.get(i-1)), new Polynomial(1), f)) {
+            i++;
+        }
+        return i > k;
     }
     
     /**
@@ -151,7 +212,7 @@ public class FiniteFieldArithmetic {
         Polynomial randomPol = elem.get(r.nextInt(elem.size()));
         do {
             randomPol = elem.get(r.nextInt(elem.size()));
-        } while (!testPrimitive(randomPol, f));
+        } while (!isPrimitive(randomPol, f));
         
         return randomPol;
     }

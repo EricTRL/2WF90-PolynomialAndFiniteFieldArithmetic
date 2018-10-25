@@ -62,6 +62,10 @@ public class FiniteField {
         return elements;
     }
     
+    public int getOrder() {
+        return elements.size();
+    }
+    
     /**
      * (Recursively) determines the Elements in the Field
      * @param curPoly Previously generated list. Initially empty

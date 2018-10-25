@@ -287,6 +287,19 @@ public class Polynomial{
     public Polynomial copy() {
         return new Polynomial(new LinkedList<>(poly));
     }
+    
+    /**
+     * Copies the polynomial with a given modulo
+     * @param p Modulo
+     * @return an exact copy of the polynomial (mod p)
+     */
+    public Polynomial copy(int p) {
+        LinkedList<Integer> l = new LinkedList<>();
+        for (int i : poly) {
+            l.addLast(Math.floorMod(i, p));
+        }
+        return new Polynomial(l);
+    }
 
     /**
      * 

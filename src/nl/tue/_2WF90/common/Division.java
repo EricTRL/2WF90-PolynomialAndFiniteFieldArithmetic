@@ -68,7 +68,7 @@ public class Division {
         }
         
         Polynomial q = new Polynomial();
-        Polynomial r = a.copy();
+        Polynomial r = a.copy(p);
         
         int degR = r.getDegree();
         int degB = b.getDegree();
