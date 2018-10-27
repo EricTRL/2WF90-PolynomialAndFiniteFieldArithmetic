@@ -99,8 +99,7 @@ public class Arithmetic {
                                             break;  
                     case "[equals-field]":  c.setMsg(FiniteFieldArithmetic.congruentField(c.getA(), c.getB(), new FiniteField(c)) ? "TRUE" : "FALSE");
                                             break;
-                    case "[primitive]":     System.out.println(c.getA());
-                        c.setMsg(FiniteFieldArithmetic.isPrimitive(c.getA(), new FiniteField(c)) ? "TRUE" : "FALSE");
+                    case "[primitive]":     c.setMsg(FiniteFieldArithmetic.isPrimitive(c.getA(), new FiniteField(c)) ? "TRUE" : "FALSE");
                                             break;
                     case "[find-prim]":     c.setAnswer(FiniteFieldArithmetic.findPrimitive(new FiniteField(c)));
                                             break;                        
